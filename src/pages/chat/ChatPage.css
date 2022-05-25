@@ -11,6 +11,7 @@
     background-color: aliceblue;
     border-radius: 20px;
     width: 80vw;
+    max-width: 800px;
     height: 50vh;
     display: flex;
     flex-direction: column;

@@ -6,7 +6,8 @@ import {useNavigate} from "react-router-dom";
 function TitlePage() {
 
     function handleCallbackResponse(response: any) {
-        console.log(response.credential);
+        console.log(response.credentials);
+        navigate("/chat")
     }
 
     //initialize google client and google button for log in
@@ -37,16 +38,7 @@ return (
             <div className={'title-container'}>
                 <h1>Batalla Naval</h1>
             </div>
-            <div className={'button-container'}>
-                <button className={'login'} onClick={() => {
-                    navigate("/chat")
-                }}>Log In</button>
-            </div>
-        </div>
-    );
-
-                <div id={"signInDiv"}/>
-            </div>
+            <div className={'button-container'} id={'signInDiv'}> Log in </div>
         </div>
     );
 
