@@ -3,6 +3,7 @@ import "./App.css";
 import Background from "./utils/images/background-img.png";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import TitlePage from "./pages/title/TitlePage";
+import ChatPage from "./pages/chat/ChatPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
             <Router>
               <Routes>
                 <Route path={"/"} element={<TitlePage />}/>
+                <Route path={"/chat"} element={<ChatPage/>}/>
               </Routes>
             </Router>
           </div>

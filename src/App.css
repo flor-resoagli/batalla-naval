@@ -27,6 +27,7 @@
 }
 
 h1 {
+
     color: #E29578;
     font-family: 'Bungee Inline', cursive;
     font-size: 128px;
@@ -42,9 +43,6 @@ button {
 }
 
 button:hover {
-
-}
-
-button:active {
-
+    background-color: #dc8663;
+    color: antiquewhite;
 }

@@ -1,0 +1,140 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-box {
+    background-color: aliceblue;
+    border-radius: 20px;
+    width: 80vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-content {
+    height: 90%;
+    width: 90%;
+    display: flex;
+    overflow-x: hidden;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+}
+
+.chat-messages {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 15px;
+    list-style-type: none;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.message {
+    background-color: #b7e8ef;
+    border-radius: 10px;
+    height: fit-content;
+    padding: 10px;
+    max-width: 90%;
+    margin-bottom: 5px;
+    overflow-x: hidden;
+}
+
+.message-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    word-break: break-word;
+    align-items: center;
+}
+
+.message.self {
+    background-color: #eccabc;
+    border-radius: 10px;
+    height: fit-content;
+    padding: 10px;
+    width: 90%;
+    margin-bottom: 5px;
+    overflow-x: hidden;
+}
+
+.avatar {
+    background-color: #74e4f3;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.avatar.self {
+    background-color: #f6a584;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.send-message {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.input-message {
+    width: 70%;
+    height: fit-content;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-size: 15px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.send-button {
+    width: 20%;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+}
+
+.register {
+    width: 400px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.name-input {
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-size: 15px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.connect {
+    width: 100px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-size: 15px;
+}
+
+
