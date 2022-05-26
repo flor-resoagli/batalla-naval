@@ -21,7 +21,6 @@ const ChatPage = () => {
         message: ''
     });
     useEffect(() => {
-        console.log(userData);
     }, [userData]);
 
     const connect =()=>{

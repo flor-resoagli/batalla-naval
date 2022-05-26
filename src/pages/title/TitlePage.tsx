@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 function TitlePage() {
 
     function handleCallbackResponse(response: any) {
-        console.log(response.credentials);
+        console.log("token: " + response.credential);
         navigate("/chat")
     }
 
@@ -16,7 +16,7 @@ function TitlePage() {
         // @ts-ignore
 
         google.accounts.id.initialize({
-            client_id: "471985862015-4v5saftm1b6vqn2j8s2u1lljc34o227c.apps.googleusercontent.com",
+            client_id: "",
             callback: handleCallbackResponse
         })
 
