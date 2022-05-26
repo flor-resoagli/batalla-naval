@@ -34,9 +34,9 @@ function TitlePage() {
     const navigate = useNavigate();
 
 return (
-        <div>
+        <div className={'container'}>
             <div className={'title-container'}>
-                <h1>Batalla Naval</h1>
+                <h1 >Batalla Naval</h1>
             </div>
             <div className={'button-container'} id={'signInDiv'}> Log in </div>
         </div>

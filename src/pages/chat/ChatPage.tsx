@@ -139,8 +139,8 @@ const ChatPage = () => {
                             {publicChats.map((chat,index)=>(
                                 <li className={`message ${chat.senderName === userData.username && "self"}`} key={index} >
                                     {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                                    <div className="message-data">{chat.message}</div>
                                     {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
+                                    <div className="message-data">{chat.message}</div>
                                 </li>
                             ))}
                         </ul>
