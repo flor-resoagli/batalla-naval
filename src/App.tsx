@@ -1,25 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Background from "./utils/images/background-img.png";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import TitlePage from "./pages/title/TitlePage";
+import ChatPage from "./pages/chat/ChatPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className={'background'}>
+          <img src={Background} className={'background-image'} alt={'battleship'}/>
+          <div className={'pages'}>
+            <Router>
+              <Routes>
+                <Route path={"/"} element={<TitlePage />}/>
+                <Route path={"/chat"} element={<ChatPage/>}/>
+              </Routes>
+            </Router>
+          </div>
+      </div>
   );
 }
 
