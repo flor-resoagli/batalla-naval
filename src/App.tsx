@@ -1,6 +1,6 @@
 import React from 'react';
 import "./App.css";
-import Background from "./utils/images/background-img.png";
+import Background from "./utils/images/img-bg.jpg";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import TitlePage from "./pages/title/TitlePage";
 import ChatPage from "./pages/chat/ChatPage";

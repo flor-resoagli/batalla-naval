@@ -10,7 +10,7 @@
 .background-image {
     width: 100vw;
     height: 100vh;
-    opacity: 0.4;
+    opacity: 0.5;
     position: fixed;
     top: 0;
     left: 0;
@@ -33,22 +33,24 @@
 
 h1 {
 
-    color: #E29578;
-    font-family: 'Bungee Inline', cursive;
+    color: #d5dada;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 7vw;
 
 }
 
 button {
-    background-color: #E29578;
-    color: white;
-    font-family: 'Bungee Inline', cursive;
+    background-color: #d5dada;
+    color: #255F85;
+    font-family:'Times New Roman', Times, serif;
     border-radius: 27px;
     border: none;
+    font-size: 25px;
+    min-height: 40px;
 
 }
 
 button:hover {
-    background-color: #dc8663;
-    color: antiquewhite;
+    background-color: #afb2b2;
+    color: #1c4560;
 }
