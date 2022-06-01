@@ -2,13 +2,24 @@
 import "./TitlePage.css";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
+import {userAPI} from "../../apis/userAPI";
 
 function TitlePage() {
 
     function handleCallbackResponse(response: any) {
-        console.log("token: " + response.credential);
-        navigate("/chat")
+        //validate token and get user information
+        handleLogIn(response.credential).then(r => console.log(r))
+        navigate("/home")
     }
+
+    const handleLogIn = async (token: string) => {
+
+        return userAPI.postUserToken(token).then((r) => {
+            console.log(r)
+            sessionStorage.setItem("player", JSON.stringify(r))
+        })
+    }
+
 
     //initialize google client and google button for log in
     useEffect(() => {
@@ -42,18 +53,6 @@ return (
         </div>
     );
 
-/**
- return (
- <div>
- <div className={'title-container'}>
- <h1>Batalla Naval</h1>
- </div>
- <div className={'button-container'}>
- <button className={'login'}>Log In</button>
- </div>
- </div>
- );
- */
 }
 
 export default TitlePage;

@@ -3,7 +3,9 @@ import {over} from "stompjs";
 import SockJS from 'sockjs-client'
 import "./ChatPage.css";
 
-var stompClient: { connect: (arg0: {}, arg1: () => void, arg2: (err: any) => void) => void; subscribe: (arg0: string, arg1: { (payload: any): void; (payload: any): void; }) => void; send: (arg0: string, arg1: {}, arg2: string) => void; } | null =null;
+var stompClient: { connect: (arg0: {}, arg1: () => void, arg2: (err: any) => void) => void;
+    subscribe: (arg0: string, arg1: { (payload: any): void; (payload: any): void; }) => void;
+    send: (arg0: string, arg1: {}, arg2: string) => void; } | null =null;
 
 interface Chat {
     senderName: string;
