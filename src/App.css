@@ -31,12 +31,15 @@
     justify-content: center;
 }
 
-h1 {
+h1, h2, h3 {
 
     color: #d5dada;
     font-family: 'Times New Roman', Times, serif;
     font-size: 7vw;
+}
 
+h3 {
+    font-size: 40px;
 }
 
 button {
