@@ -5,12 +5,14 @@ import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom
 import TitlePage from "./pages/title/TitlePage";
 import ChatPage from "./pages/chat/ChatPage";
 import HomePage from "./pages/home/HomePage";
+import GamePage from "./pages/game/GamePage";
+import NewGamePage from "./pages/newGame/newGamePage";
 
 function App() {
 
-    class ProtectedRoute extends React.Component<{ path: any, children: any }> {
+    class ProtectedRoute extends React.Component<{children: any }> {
         render() {
-            let {path, children} = this.props;
+            let {children} = this.props;
             if (!sessionStorage.getItem("player")) {
                 return <Navigate to={"/"} replace/>;
             }
@@ -25,17 +27,35 @@ function App() {
             <Router>
                 <div className={'pages'}>
                   <Routes>
+
                         <Route path={"/"} element={<TitlePage />}/>
+
+                        <Route path={'/game'} element={<GamePage/>}/>
+
                         <Route path={"/home"} element={
-                            <ProtectedRoute path={'/home'}>
+                            <ProtectedRoute >
                                 <HomePage/>
                             </ProtectedRoute>
                         }/>
+
                         <Route path={"/chat"} element={
-                            <ProtectedRoute path={'/chat'}>
+                            <ProtectedRoute >
                                 <ChatPage/>
                             </ProtectedRoute>
                         }/>
+
+                      <Route path={'/newGame'} element={
+                          <ProtectedRoute >
+                              <NewGamePage/>
+                          </ProtectedRoute>
+                      }/>
+
+                      <Route path={'/game/:gameID'} element={
+                          <ProtectedRoute>
+                              <GamePage />
+                          </ProtectedRoute>
+                      }/>
+
                   </Routes>
                 </div>
             </Router>

@@ -1,7 +1,10 @@
 import "./HomePage.css"
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 function HomePage() {
+    const navigate = useNavigate()
+
     const [player, setPlayer] = useState<{
         email: string,
         gamesPlayed: number,
@@ -35,7 +38,8 @@ function HomePage() {
                     </div>
                 </div>
                 <div className={'button-container'}>
-                    <button>Juego Privado</button>
+                    <button onClick={() => { // @ts-ignore
+                        navigate("/newGame")}}>Juego Privado</button>
                     <button>Juego Publico</button>
                 </div>
             </div>
