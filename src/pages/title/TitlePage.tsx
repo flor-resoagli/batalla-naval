@@ -23,7 +23,7 @@ function TitlePage() {
 
     //initialize google client and google button for log in
     useEffect(() => {
-        /* global google */
+        // global google
         // @ts-ignore
 
         google.accounts.id.initialize({

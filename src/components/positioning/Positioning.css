@@ -2,8 +2,8 @@
     margin: 2vmin;
     display: grid;
     background-color: hsla(196, 38%, 61%, 0.53);
-    grid-template-rows: repeat(10, 4.6vmin);
-    grid-template-columns: repeat(10, 4.6vmin);
+    grid-template-rows: repeat(10, 5vmin);
+    grid-template-columns: repeat(10, 5vmin);
 }
 
 .rotate-btn {
@@ -35,8 +35,8 @@
     display: flex;
     flex-wrap: wrap;
     margin: 1vmin;
-    width: calc(4.6vmin * var(--width, 1));
-    height: calc(4.6vmin * var(--height, 1));
+    width: calc(5vmin * var(--width, 1));
+    height: calc(4.5vmin * var(--height, 1));
     border-radius: 2.3vmin;
     background-color: #95b3b4;
 }
