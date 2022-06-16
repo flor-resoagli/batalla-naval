@@ -8,6 +8,8 @@ import HomePage from "./pages/home/HomePage";
 import GamePage from "./pages/game/GamePage";
 import NewGamePage from "./pages/newGame/newGamePage";
 import WaitingRoomPage from "./pages/waitingRoom/WaitingRoomPage";
+import WinnerPage from "./pages/WinnerPage/WinnerPage";
+import LoserPage from "./pages/LoserPage/LoserPage";
 
 function App() {
 
@@ -60,6 +62,18 @@ function App() {
                       <Route path={'/waiting'} element={
                           <ProtectedRoute>
                               <WaitingRoomPage />
+                          </ProtectedRoute>
+                      }/>
+
+                      <Route path={'/winner'} element={
+                          <ProtectedRoute>
+                              <WinnerPage />
+                          </ProtectedRoute>
+                      }/>
+
+                      <Route path={'/loser'} element={
+                          <ProtectedRoute>
+                              <LoserPage />
                           </ProtectedRoute>
                       }/>
 

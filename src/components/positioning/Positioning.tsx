@@ -84,7 +84,7 @@ function Positioning () {
         console.log(draggedShip)
     }
 
-    function handleDragStart(event: DragEvent<HTMLDivElement>) {
+    function handleDragStart(event: React.DragEvent<HTMLDivElement>) {
         console.log(event)
 
         // @ts-ignore
