@@ -31,7 +31,7 @@
     justify-content: center;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
 
     color: #d5dada;
     font-family: 'Times New Roman', Times, serif;
@@ -40,6 +40,10 @@ h1, h2, h3 {
 
 h3 {
     font-size: 40px;
+}
+
+h4 {
+    font-size: 20px;
 }
 
 button {
@@ -56,4 +60,18 @@ button {
 button:hover {
     background-color: #afb2b2;
     color: #1c4560;
+}
+
+a {
+    color: #d5dada;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+a:hover {
+    color: #aaadad;
+    cursor: pointer;
+}
+
+a:active {
+    color: #8c8f8f
 }

@@ -1,0 +1,157 @@
+.user-board {
+    margin: 2vmin;
+    display: grid;
+    background-color: hsla(196, 38%, 61%, 0.53);
+    grid-template-rows: repeat(10, 4.6vmin);
+    grid-template-columns: repeat(10, 4.6vmin);
+}
+
+.rotate-btn {
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+.user-board div {
+    border: 1px solid hsla(202, 50%, 26%, 0.57);
+}
+
+.grid-display {
+    display: flex;
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.ship > div {
+    width: 4.6vmin;
+    height: 4.6vmin;
+}
+
+.ship {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1vmin;
+    width: calc(4.6vmin * var(--width, 1));
+    height: calc(4.6vmin * var(--height, 1));
+    border-radius: 2.3vmin;
+    background-color: #95b3b4;
+}
+
+.destroyer-container {
+    --width: 2;
+}
+
+.destroyer-container-vertical {
+    --height: 2;
+    --width: 1;
+}
+
+.submarine-container,
+.cruiser-container {
+    --width: 3;
+}
+
+.submarine-container-vertical,
+.cruiser-container-vertical {
+    --height: 3;
+    --width: 1;
+}
+
+.battleship-container {
+    --width: 4;
+}
+
+.battleship-container-vertical {
+    --height: 4;
+    --width: 1;
+}
+
+.carrier-container {
+    --width: 5;
+}
+
+.carrier-container-vertical {
+    --height: 5;
+    --width: 1;
+}
+
+.taken,
+.ship {
+    position: relative;
+    background-color: hsl(0, 0%, 80%);
+}
+
+.taken.start.vertical,
+.taken.start.vertical::before {
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+}
+
+.taken.end.vertical,
+.taken.end.vertical::before {
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.taken.start.horizontal,
+.taken.start.horizontal::before {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.taken.end.horizontal,
+.taken.end.horizontal::before {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.taken.vertical::before,
+.taken.horizontal::before {
+    content: '';
+    position: absolute;
+    border: .3vmin solid white;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+}
+
+.taken.horizontal::before {
+    animation: ripplesY 3s linear infinite;
+    border-left: none;
+    border-right: none;
+}
+
+.taken.vertical::before {
+    animation: ripplesX 3s linear infinite;
+    border-top: none;
+    border-bottom: none;
+}
+
+@keyframes ripplesX {
+    0% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scaleX(1.5);
+    }
+}
+
+@keyframes ripplesY {
+    0% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scaleY(1.5);
+    }
+}

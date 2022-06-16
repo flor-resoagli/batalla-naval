@@ -9,6 +9,8 @@ function NewGamePage() {
 
     const [loading, setLoading] = useState(false)
 
+    const [privateGameToken, setPrivateGameToken] = useState("")
+
     const handleNewGame = () => {
         setLoading(true)
         // @ts-ignore
@@ -18,7 +20,10 @@ function NewGamePage() {
             navigate(`/game/${r}`)
             setLoading(false)
         })
+    }
 
+    const handleJoinGame = () => {
+        navigate(`/game/${privateGameToken}`)
     }
 
     return (
@@ -34,8 +39,9 @@ function NewGamePage() {
                 <div className={'content-container'}>
                     <div className={'col-container'}>
                         <div className={'row-container'}>
-                            <input placeholder={'Token'} className={'name-input'}/>
-                            <button className={'sm-button'}> Unirse </button>
+                            <input placeholder={'Token'} className={'name-input'}
+                                   onChange={(e) => {setPrivateGameToken(e.target.value)}}/>
+                            <button className={'sm-button'} onClick={handleJoinGame}> Unirse </button>
                         </div>
                         <button onClick={handleNewGame}>Crear Juego</button>
                     </div>
