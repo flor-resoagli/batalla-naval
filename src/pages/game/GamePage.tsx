@@ -92,8 +92,8 @@ function GamePage () {
 
         case "WAITING":
             return (
-                // <Positioning/>
-                <Waiting gameID={gameID?gameID:""}/>
+                <Positioning/>
+                // <Waiting gameID={gameID?gameID:""}/>
             )
         case "POSITIONING":
             return (
