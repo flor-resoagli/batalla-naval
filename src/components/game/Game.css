@@ -1,0 +1,11 @@
+.opponent-board {
+    margin: 2vmin;
+    display: grid;
+    background-color: hsla(27, 55%, 62%, 0.53);
+    grid-template-rows: repeat(10, 5vmin);
+    grid-template-columns: repeat(10, 5vmin);
+}
+
+.opponent-board div {
+    border: 1px solid hsla(202, 50%, 26%, 0.57);
+}

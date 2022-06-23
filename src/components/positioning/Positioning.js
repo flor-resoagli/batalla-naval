@@ -1,21 +1,23 @@
 import './Positioning.css'
 import React, {useEffect, useState} from "react";
 
-
-function Positioning () {
+function Positioning ( {onConfirm} ) {
 
     //LOAD BOARD
 
     const squares = []
-    const ships= document.querySelectorAll('.ship')
+    const ships = document.querySelectorAll('.ship')
     const [load, setLoad] = useState(true)
+
+    const [isOver, setIsOver] = useState(false)
 
     useEffect(() => {
 
         if(load) {
             renderSquares()
             setLoad(false)
-
+            sessionStorage.setItem("selectedShipId", '0')
+            sessionStorage.setItem('isHorizontal', 'true')
         }
 
     }, [])
@@ -41,13 +43,29 @@ function Positioning () {
 
     }
 
+    const handleButtonClick = () => {
+
+        if(isOver) {
+            //handle confirm positions
+            handleConfirmPositions()
+        }else{
+            rotateShips()
+        }
+
+    }
+
     //SHIP ROTATION
 
     let horizontal = true
 
     function rotateShips() {
 
+
+
         horizontal = !horizontal
+        const h = sessionStorage.getItem('isHorizontal') === 'true'
+
+        sessionStorage.setItem('isHorizontal',(!h).toString())
 
         ships.forEach( (s) => {
 
@@ -59,11 +77,13 @@ function Positioning () {
 
     //SHIP DRAG&DROP
 
-    const [selectedShipId, setSelectedShipId] = useState(0)
+    // const [selectedShipId, setSelectedShipId] = useState(0)
 
     const handleMouseDown = (event) => {
 
-        setSelectedShipId(parseInt(event.target.id.substr(-1)))
+        sessionStorage.setItem('selectedShipId', (event.target.id.substr(-1)) )
+
+        // setSelectedShipId(parseInt(event.target.id.substr(-1)))
 
         // console.log(selectedShipId)
 
@@ -84,99 +104,116 @@ function Positioning () {
 
     const handleDrop = (event) => {
 
+    //     console.log(event)
+    //
         let draggedShip = document.querySelector(event.dataTransfer.getData('ship'))
         let draggedShipLength = draggedShip.children.length
-        console.log(draggedShip)
-        console.log(draggedShipLength)
-
+    //
         let shipNameWithLastId = draggedShip.lastChild.id
         let shipClass = shipNameWithLastId.slice(0, -2)
-        // console.log(shipClass)
-
+    //     // console.log(shipClass)
+    //
         let lastShipIndex = parseInt(shipNameWithLastId.substr(-1))
-        let shipLastId =  parseInt(event.target.dataset.id)
-        console.log(shipLastId)
+        let shipLastId =  lastShipIndex + parseInt(event.target.dataset.id)
 
-        // //TODO: fix selectedShipId
-        shipLastId = shipLastId - selectedShipId
-        console.log(shipLastId)
+        const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,22,32,42,52,62,72,82,92,3,13,23,33,43,53,63,73,83,93]
+        const notAllowedVertical = [99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60]
 
-        for(let i=0; i < draggedShipLength; i++ ) {
-            let directionClass
-            if (i === 0) directionClass = 'start'
-            else if (i === draggedShipLength-1) directionClass = 'end'
+        let newNotAllowedHorizontal = notAllowedHorizontal.splice(0, 10 * lastShipIndex)
+        let newNotAllowedVertical = notAllowedVertical.splice(0, 10 * lastShipIndex)
 
-            console.log(parseInt(event.target.dataset.id) - selectedShipId + i)
+        let selectedShipIndex = sessionStorage.getItem("selectedShipId")
 
-            console.log(horizontal)
 
-            squares[parseInt(event.target.dataset.id) - selectedShipId + i].classList.add('taken', horizontal ? 'horizontal' : 'vertical', directionClass, shipClass)
-        }
+        shipLastId = shipLastId - selectedShipIndex
+        const isHorizontal = sessionStorage.getItem('isHorizontal') === 'true'
 
-        document.querySelector('.grid-display').removeChild(draggedShip)
-        //     if(!displayGrid.querySelector('.ship')) allShipsPlaced =s true
+        if(!isHorizontal) selectedShipIndex = selectedShipIndex*10
 
+
+
+        if (isHorizontal && !newNotAllowedHorizontal.includes(shipLastId)) {
+
+            for(let i=0; i < draggedShipLength; i++) {
+                const index = parseInt(event.target.dataset.id) - selectedShipIndex + i
+                if(squares[index].classList.contains('taken')) return
+            }
+
+            for (let i=0; i < draggedShipLength; i++) {
+                const index = parseInt(event.target.dataset.id) - selectedShipIndex + i
+                let directionClass
+                // if (i === 0) directionClass = 'start'
+                // if (i === draggedShipLength - 1) directionClass = 'end'
+                squares[index].classList.add('taken', 'horizontal', directionClass, shipClass)
+            }
+
+        } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
+
+            for(let i=0; i < draggedShipLength; i++) {
+                const index = parseInt(event.target.dataset.id) - selectedShipIndex + 10*i
+                if(squares[index].classList.contains('taken')) return
+            }
+
+            for (let i=0; i < draggedShipLength; i++) {
+                const index = parseInt(event.target.dataset.id) - selectedShipIndex + 10*i
+                let directionClass
+                // if (i === 0) directionClass = 'start'
+                // if (i === draggedShipLength - 1) directionClass = 'end'
+                squares[index].classList.add('taken', 'vertical', directionClass, shipClass)
+            }
+
+        } else return
+
+        const displayGrid = document.querySelector('.grid-display')
+
+        displayGrid.removeChild(draggedShip)
+
+        if(document.querySelector('.grid-display').children.length === 0) setIsOver(true)
     }
 
 
+    const handleConfirmPositions = () => {
 
-    // function dragDrop() {
-    //     let shipNameWithLastId = draggedShip.lastChild.id
-    //     let shipClass = shipNameWithLastId.slice(0, -2)
-    //     // console.log(shipClass)
+        const takenSquares = document.querySelectorAll('.taken')
 
+        const coords = []
 
-    //     let lastShipIndex = parseInt(shipNameWithLastId.substr(-1))
-    //     let shipLastId = lastShipIndex + parseInt(this.dataset.id)
-    //     // console.log(shipLastId)
-    //
-    //
-    //     selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1))
-    //
-    //     shipLastId = shipLastId - selectedShipIndex
-    //     // console.log(shipLastId)
-    //
-    //     if (isHorizontal && !newNotAllowedHorizontal.includes(shipLastId)) {
-    //         for (let i=0; i < draggedShipLength; i++) {
-    //             let directionClass
-    //             if (i === 0) directionClass = 'start'
-    //             if (i === draggedShipLength - 1) directionClass = 'end'
-    //             userSquares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', 'horizontal', directionClass, shipClass)
-    //         }
-    //         //As long as the index of the ship you are dragging is not in the newNotAllowedVertical array! This means that sometimes if you drag the ship by its
-    //         //index-1 , index-2 and so on, the ship will rebound back to the displayGrid.
-    //     } else if (!isHorizontal && !newNotAllowedVertical.includes(shipLastId)) {
-    //         for (let i=0; i < draggedShipLength; i++) {
-    //             let directionClass
-    //             if (i === 0) directionClass = 'start'
-    //             if (i === draggedShipLength - 1) directionClass = 'end'
-    //             userSquares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken', 'vertical', directionClass, shipClass)
-    //         }
-    //     } else return
+        takenSquares.forEach(s => {
 
+            const x = s.dataset.id%10
+            const y = Math.floor(s.dataset.id/10)
 
+            coords.push([x, y])
 
-    //
-    //     displayGrid.removeChild(draggedShip)
-    //     if(!displayGrid.querySelector('.ship')) allShipsPlaced = true
-    // }
+        })
 
+        onConfirm(coords)
+
+        // console.log(coords)
+
+        // takenSquares.forEach(s => console.log('X: ' + s.dataset.id%10 + '; Y: ' + Math.floor(s.dataset.id/10)))
+
+    }
 
     return (
         <div className={'container'}>
 
+            <h3> Ubica sus barcos! </h3>
+
             <div className={'board-container'}>
                 <div className={'user-board'}></div>
+
             </div>
 
-            <button className={'rotate-btn'} onClick={rotateShips}> Rotar </button>
+
+            <button className={'rotate-btn'} onClick={handleButtonClick} > {isOver ? "Confirmar" : "Rotar"} </button>
 
             <div className="board-container">
                 <div className="grid-display">
                     <div className="ship destroyer-container" draggable="true"
                         onMouseDown={handleMouseDown}
                         onDragStart={handleDragStart}
-                         onDrop={handleDrop}>
+                        onDrop={handleDrop}>
                         <div id="destroyer-0"></div>
                         <div id="destroyer-1"></div>
 
@@ -202,6 +239,7 @@ function Positioning () {
                         <div id="cruiser-2"></div>
 
                     </div>
+
 
                     <div className="ship battleship-container" draggable="true"
                          onMouseDown={handleMouseDown}

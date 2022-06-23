@@ -9,6 +9,7 @@
 .rotate-btn {
     height: 30px;
     margin-bottom: 20px;
+
 }
 
 .user-board div {
@@ -37,7 +38,7 @@
     margin: 1vmin;
     width: calc(5vmin * var(--width, 1));
     height: calc(4.5vmin * var(--height, 1));
-    border-radius: 2.3vmin;
+    /*border-radius: 2.3vmin;*/
     background-color: #95b3b4;
 }
 
@@ -82,38 +83,39 @@
 .taken,
 .ship {
     position: relative;
+    border: none;
     background-color: hsl(0, 0%, 80%);
 }
 
-.taken.start.vertical,
-.taken.start.vertical::before {
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-}
+/*.taken.start.vertical,*/
+/*.taken.start.vertical::before {*/
+/*    border-top-left-radius: 50%;*/
+/*    border-top-right-radius: 50%;*/
+/*}*/
 
-.taken.end.vertical,
-.taken.end.vertical::before {
-    border-bottom-left-radius: 50%;
-    border-bottom-right-radius: 50%;
-}
+/*.taken.end.vertical,*/
+/*.taken.end.vertical::before {*/
+/*    border-bottom-left-radius: 50%;*/
+/*    border-bottom-right-radius: 50%;*/
+/*}*/
 
-.taken.start.horizontal,
-.taken.start.horizontal::before {
-    border-top-left-radius: 50%;
-    border-bottom-left-radius: 50%;
-}
+/*.taken.start.horizontal,*/
+/*.taken.start.horizontal::before {*/
+/*    border-top-left-radius: 50%;*/
+/*    border-bottom-left-radius: 50%;*/
+/*}*/
 
-.taken.end.horizontal,
-.taken.end.horizontal::before {
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
-}
+/*.taken.end.horizontal,*/
+/*.taken.end.horizontal::before {*/
+/*    border-top-right-radius: 50%;*/
+/*    border-bottom-right-radius: 50%;*/
+/*}*/
 
 .taken.vertical::before,
 .taken.horizontal::before {
     content: '';
     position: absolute;
-    border: .3vmin solid white;
+    border: none;
     top: -1px;
     bottom: -1px;
     left: -1px;
@@ -122,12 +124,14 @@
 
 .taken.horizontal::before {
     animation: ripplesY 3s linear infinite;
+    border: .3vmin solid white;
     border-left: none;
     border-right: none;
 }
 
 .taken.vertical::before {
     animation: ripplesX 3s linear infinite;
+    border: .3vmin solid white;
     border-top: none;
     border-bottom: none;
 }

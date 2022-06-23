@@ -6,6 +6,8 @@ import {useParams} from "react-router-dom";
 import {RandomUUIDOptions} from "crypto";
 import Waiting from "../../components/waiting/Waiting";
 import Positioning from "../../components/positioning/Positioning";
+import Standby from "../../components/standby/Standby";
+import Game from "../../components/game/Game";
 
 let stompClient: {
     connect: (arg0: {}, arg1: () => void, arg2: (err: any) => void) => void;
@@ -34,12 +36,13 @@ function GamePage () {
     const [connected, setConnected] = useState(false)
 
     useEffect(() => {
-        console.log(gameID)
+        // console.log(gameID)
         if(onLoad){
-           connect()
             setOnLoad(false)
+            connect()
+
         }
-    })
+    }, [])
 
     function onError() {
         console.log("error")
@@ -53,17 +56,49 @@ function GamePage () {
         }
     }
 
+    const [positions, setPositions] = useState<{id: string, x: number, y: number}[]>([])
+    const [ownShots, setOwnShots] = useState<{id: string, x: number, y: number}[]>([])
+    const [opponentShots, setOpponentShots] = useState<{id: string, x: number, y: number}[]>([])
+    const [ownTurn, setOwnTurn] = useState(false)
+
     function onMessageReceived(payload: { body: string; }) {
+
+        // console.log('payload: ' + payload)
+        // console.log('body: ' + payload.body)
+
         const payloadData = JSON.parse(payload.body);
+        console.log(payloadData)
         setGameState(payloadData.status)
         switch (payloadData.status) {
+
+            case "READY":
+                console.log(payloadData.positionsPlayer)
+                setPositions(payloadData.positionsPlayer)
+                setOwnShots(payloadData.shotsPlayer1)
+                setOpponentShots(payloadData.shotsPlayer2)
+                break
 
             default: break
         }
     }
 
     function onPrivateMessage(payload: { body: string; }) {
-        console.log(payload.body)
+        // console.log('payload: ' + payload)
+        // console.log('body: ' + payload.body)
+
+        const payloadData = JSON.parse(payload.body);
+        setGameState(payloadData.status)
+        switch (payloadData.status) {
+
+                    case "GAME_LOAD":
+                        console.log(payloadData.positionsPlayer)
+                        setPositions(payloadData.positionsPlayer)
+                        setOwnShots(payloadData.shotsPlayer1)
+                        setOpponentShots(payloadData.shotsPlayer2)
+                        break
+
+                    default: break
+                }
     }
 
     function userJoin() {
@@ -87,42 +122,50 @@ function GamePage () {
         }, 500)
     }
 
+    const onPositioningOver = (positions: [[]]) => {
+
+        var positionMessage = {
+            gameRoomId: gameID as RandomUUIDOptions,
+            userId: userID,
+            positions: positions
+        }
+        if(stompClient) {
+            stompClient.send("/app/board", {}, JSON.stringify(positionMessage))
+        }
+    }
+
 
     switch (gameState) {
 
         case "WAITING":
             return (
-                // <Positioning/>
+                // <Positioning onConfirm={onPositioningOver}/>
                 <Waiting gameID={gameID?gameID:""}/>
             )
         case "POSITIONING":
             return (
-                <Positioning/>
+                <Positioning onConfirm={onPositioningOver}/>
             )
         case "STANDBY":
             return (
-                <div>
-                    <h3>Waiting for other player to finish positioning...</h3>
-                </div>
+                <Standby />
             )
-        case "READY":
+        case "READY" || "GAME_LOAD" || "YOUR_TURN" || "OPPONENT_TURN":
             return (
-                <div>
-                    <h3>Starting the game</h3>
-                </div>
+                <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} />
             )
-        case "YOUR_TURN":
-            return (
-                <div>
-                    <h3>Your turn</h3>
-                </div>
-            )
-        case "OPPONENT_TURN":
-            return (
-                <div>
-                    <h3>Wait</h3>
-                </div>
-            )
+        // case "YOUR_TURN":
+        //     return (
+        //         <div>
+        //             <h3>Your turn</h3>
+        //         </div>
+        //     )
+        // case "OPPONENT_TURN":
+        //     return (
+        //         <div>
+        //             <h3>Wait</h3>
+        //         </div>
+        //     )
         case "GAME_OVER":
             return (
                 <div>
