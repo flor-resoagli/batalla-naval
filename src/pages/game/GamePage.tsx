@@ -57,8 +57,8 @@ function GamePage () {
     }
 
     const [positions, setPositions] = useState<{id: string, x: number, y: number}[]>([])
-    const [ownShots, setOwnShots] = useState<{id: string, x: number, y: number}[]>([])
-    const [opponentShots, setOpponentShots] = useState<{id: string, x: number, y: number}[]>([])
+    const [ownShots, setOwnShots] = useState<{ x: number, y: number, hit: boolean}[]>([])
+    const [opponentShots, setOpponentShots] = useState<{x: number, y: number, hit: boolean}[]>([])
     const [ownTurn, setOwnTurn] = useState(false)
 
     function onMessageReceived(payload: { body: string; }) {
@@ -70,6 +70,24 @@ function GamePage () {
         console.log(payloadData)
         setGameState(payloadData.status)
         switch (payloadData.status) {
+
+            case "FEEDBACK":
+                if(payloadData.shooterId === userID){
+                    ownShots.push({
+                        x: payloadData.x,
+                        y: payloadData.y,
+                        hit: payloadData.hit
+                    })
+                    setOwnShots(ownShots)
+                }else{
+                    opponentShots.push({
+                        x: payloadData.x,
+                        y: payloadData.y,
+                        hit: payloadData.hit
+                    })
+                    setOpponentShots(opponentShots)
+                }
+                break
 
             default: break
 
@@ -85,16 +103,20 @@ function GamePage () {
         switch (payloadData.status) {
 
             case "YOUR_TURN":
-                setPositions(payloadData.positionsPlayer1)
-                setOwnShots(payloadData.shotsPlayer1)
-                setOpponentShots(payloadData.shotsPlayer2)
+                if(payloadData.positionsPlayer1){
+                    setPositions(payloadData.positionsPlayer1)
+                    setOwnShots(payloadData.shotsPlayer1)
+                    setOpponentShots(payloadData.shotsPlayer2)
+                }
                 setOwnTurn(true)
                 break
 
             case "OPPONENT_TURN":
-                setPositions(payloadData.positionsPlayer1)
-                setOwnShots(payloadData.shotsPlayer1)
-                setOpponentShots(payloadData.shotsPlayer2)
+                if(payloadData.positionsPlayer1){
+                    setPositions(payloadData.positionsPlayer1)
+                    setOwnShots(payloadData.shotsPlayer1)
+                    setOpponentShots(payloadData.shotsPlayer2)
+                }
                 setOwnTurn(false)
                 break
 
@@ -135,6 +157,27 @@ function GamePage () {
         }
     }
 
+    const onShoot = (squareId: string) => {
+        const id = parseInt(squareId)
+
+        const x = id%10
+        const y = Math.floor(id/10)
+
+        var shootMessage = {
+            gameRoomId: gameID as RandomUUIDOptions,
+            shooterId: userID,
+            x: x,
+            y: y
+        }
+
+        if(stompClient) {
+            stompClient.send("/app/shoot", {}, JSON.stringify(shootMessage))
+        }
+    }
+
+    //RANDOM POSITIONS
+    // /app/randomBoard
+
 
     switch (gameState) {
 
@@ -155,10 +198,13 @@ function GamePage () {
             return (
                 <h2>Loading...</h2>
             )
-        case "READY" || "YOUR_TURN" || "OPPONENT_TURN":
+        case "READY":
+        case"YOUR_TURN":
+        case "OPPONENT_TURN":
             return (
-                <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} />
+                <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
             )
+
         // case "YOUR_TURN":
         //     return (
         //         <div>

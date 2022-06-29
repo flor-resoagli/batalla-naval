@@ -3,6 +3,12 @@
     height: fit-content;
 }
 
+.game {
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .opponent-board {
     margin: 2vmin;
     display: grid;
@@ -15,5 +21,29 @@
 
 .opponent-board div {
     border: 1px solid hsla(27, 37%, 35%, 0.53);
+}
+
+.opponent-board div:hover {
+    background-color: hsla(27, 37%, 35%, 0.53);
+}
+
+.opponent-board div:active {
+    background-color: hsla(27, 37%, 35%, 1);
+}
+
+.opponent-board div.missed {
+    background-color: red;
+}
+
+.opponent-board div.hit {
+    background-color: green;
+}
+
+.user-board div.hit {
+    background-color: blue;
+}
+
+.user-board div.missed {
+    background-color: yellow;
 }
 
