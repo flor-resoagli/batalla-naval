@@ -14,7 +14,7 @@ interface GameProps {
 const Game = (props: GameProps) => {
 
     const userSquares: HTMLDivElement[] = []
-    const opponentSquares = []
+    const opponentSquares: HTMLDivElement[] = []
 
     const [load, setLoad] = useState(true)
 
@@ -23,8 +23,8 @@ const Game = (props: GameProps) => {
             console.log(props.positions)
             renderUserBoard()
             renderOpponentBoard()
-            // renderShips()
-            //renderShots()
+            renderShips()
+            // renderShots()
             setLoad(false)
         }
     }, [])
@@ -67,31 +67,12 @@ const Game = (props: GameProps) => {
 
             const index = y*10 + x
 
-            userSquares[index].classList.add('.taken')
+            userSquares[index].classList.add('taken')
         })
 
     }
 
-    // function renderSquares() {
-    //
-    //     const grid = document.querySelector(".user-board")
-    //     let i = 0
-    //
-    //     while (squares.length < 100) {
-    //
-    //         const square = document.createElement('div')
-    //         square.dataset.id = String(i)
-    //         square.ondragstart = handleDragStart
-    //         square.ondragover = enableDropping
-    //         square.ondragenter = enableDropping
-    //         square.ondrop = handleDrop
-    //         grid?.appendChild(square)
-    //         squares.push(square)
-    //         i++
-    //
-    //     }
-    //
-    // }
+    
 
 
     return (
@@ -100,6 +81,12 @@ const Game = (props: GameProps) => {
             <div className={'board-container'}>
                 <div className={'user-board'}></div>
                 <div className={'opponent-board'}></div>
+
+                {props.ownTurn ? (
+                    <h3></h3>
+                ):(
+                    <h3></h3>
+                )}
 
             </div>
         </div>

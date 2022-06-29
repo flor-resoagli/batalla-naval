@@ -123,15 +123,15 @@
 }
 
 .taken.horizontal::before {
-    animation: ripplesY 3s linear infinite;
-    border: .3vmin solid white;
+    /*animation: ripplesY 3s linear infinite;*/
+    /*border: .3vmin solid white;*/
     border-left: none;
     border-right: none;
 }
 
 .taken.vertical::before {
-    animation: ripplesX 3s linear infinite;
-    border: .3vmin solid white;
+    /*animation: ripplesX 3s linear infinite;*/
+    /*border: .3vmin solid white;*/
     border-top: none;
     border-bottom: none;
 }

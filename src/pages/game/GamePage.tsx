@@ -71,14 +71,8 @@ function GamePage () {
         setGameState(payloadData.status)
         switch (payloadData.status) {
 
-            case "READY":
-                console.log(payloadData.positionsPlayer)
-                setPositions(payloadData.positionsPlayer)
-                setOwnShots(payloadData.shotsPlayer1)
-                setOpponentShots(payloadData.shotsPlayer2)
-                break
-
             default: break
+
         }
     }
 
@@ -90,15 +84,22 @@ function GamePage () {
         setGameState(payloadData.status)
         switch (payloadData.status) {
 
-                    case "GAME_LOAD":
-                        console.log(payloadData.positionsPlayer)
-                        setPositions(payloadData.positionsPlayer)
-                        setOwnShots(payloadData.shotsPlayer1)
-                        setOpponentShots(payloadData.shotsPlayer2)
-                        break
+            case "YOUR_TURN":
+                setPositions(payloadData.positionsPlayer1)
+                setOwnShots(payloadData.shotsPlayer1)
+                setOpponentShots(payloadData.shotsPlayer2)
+                setOwnTurn(true)
+                break
 
-                    default: break
-                }
+            case "OPPONENT_TURN":
+                setPositions(payloadData.positionsPlayer1)
+                setOwnShots(payloadData.shotsPlayer1)
+                setOpponentShots(payloadData.shotsPlayer2)
+                setOwnTurn(false)
+                break
+
+            default: break
+        }
     }
 
     function userJoin() {
@@ -150,7 +151,11 @@ function GamePage () {
             return (
                 <Standby />
             )
-        case "READY" || "GAME_LOAD" || "YOUR_TURN" || "OPPONENT_TURN":
+        case "GAME_LOAD":
+            return (
+                <h2>Loading...</h2>
+            )
+        case "READY" || "YOUR_TURN" || "OPPONENT_TURN":
             return (
                 <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} />
             )
