@@ -2,12 +2,15 @@ import './GamePage.css'
 import {useEffect, useState} from "react";
 import SockJS from "sockjs-client";
 import {over} from "stompjs";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {RandomUUIDOptions} from "crypto";
 import Waiting from "../../components/waiting/Waiting";
 import Positioning from "../../components/positioning/Positioning";
 import Standby from "../../components/standby/Standby";
 import Game from "../../components/game/Game";
+import Loading from "../../components/loading/Loading";
+import game from "../../components/game/Game";
+import Chat from "../../components/chat/Chat";
 
 let stompClient: {
     connect: (arg0: {}, arg1: () => void, arg2: (err: any) => void) => void;
@@ -26,6 +29,8 @@ export type Shot = {
 }
 
 function GamePage () {
+
+    const navigate = useNavigate()
 
     // @ts-ignore
     const userID = JSON.parse(sessionStorage.getItem("player")).id
@@ -60,6 +65,7 @@ function GamePage () {
     const [ownShots, setOwnShots] = useState<{ x: number, y: number, hit: boolean}[]>([])
     const [opponentShots, setOpponentShots] = useState<{x: number, y: number, hit: boolean}[]>([])
     const [ownTurn, setOwnTurn] = useState(false)
+    const [playerWon, setPlayerWon] = useState(false)
 
     function onMessageReceived(payload: { body: string; }) {
 
@@ -67,7 +73,7 @@ function GamePage () {
         // console.log('body: ' + payload.body)
 
         const payloadData = JSON.parse(payload.body);
-        console.log(payloadData)
+        // console.log(payloadData)
         setGameState(payloadData.status)
         switch (payloadData.status) {
 
@@ -78,15 +84,19 @@ function GamePage () {
                         y: payloadData.y,
                         hit: payloadData.hit
                     })
-                    setOwnShots(ownShots)
+                    setOwnShots([...ownShots])
                 }else{
                     opponentShots.push({
                         x: payloadData.x,
                         y: payloadData.y,
                         hit: payloadData.hit
                     })
-                    setOpponentShots(opponentShots)
+                    setOpponentShots([...opponentShots])
                 }
+                break
+
+            case "GAME_ENDED":
+                setPlayerWon(payloadData.winnerId === userID)
                 break
 
             default: break
@@ -139,10 +149,33 @@ function GamePage () {
             setConnected(true)
             if(stompClient){
                 stompClient.subscribe('/game/'+gameID+'/private', onMessageReceived);
+                stompClient.subscribe('/game/'+gameID+'/message', onChatReceived)
                 stompClient.subscribe('/user/'+userID+'/private', onPrivateMessage);
             }
             userJoin();
         }, 500)
+    }
+
+    const [messages, setMessages] = useState<{message: string, user: string}[]>([])
+    var receive = true
+
+    const onChatReceived = (payload: { body: string; }) => {
+
+        const payloadData = JSON.parse(payload.body);
+
+        const message = {
+            message: payloadData.message,
+            user: payloadData.userId
+        }
+
+        if(receive){
+            messages.push(message)
+            console.log(message)
+            setMessages([...messages])
+        }
+
+        receive = !receive
+
     }
 
     const onPositioningOver = (positions: [[]]) => {
@@ -175,20 +208,46 @@ function GamePage () {
         }
     }
 
-    //RANDOM POSITIONS
-    // /app/randomBoard
+    const randomizePositions = () => {
+
+        var randomPositionMessage = {
+            gameRoomId: gameID as RandomUUIDOptions,
+            userId: userID
+        }
+
+        if(stompClient) {
+            stompClient.send("/app/randomBoard", {}, JSON.stringify(randomPositionMessage))
+        }
+    }
+
+    const handleBackToHome = () => {
+        navigate("/home")
+    }
+
+    const handleSendMessage = (message: string) => {
+
+        var chatMessage = {
+            gameRoomId: gameID as RandomUUIDOptions,
+            userId: userID,
+            message: message
+        }
+
+        if(stompClient) {
+            stompClient.send("/app/chatMessage", {}, JSON.stringify(chatMessage))
+        }
+
+    }
 
 
     switch (gameState) {
 
         case "WAITING":
             return (
-                // <Positioning onConfirm={onPositioningOver}/>
                 <Waiting gameID={gameID?gameID:""}/>
             )
         case "POSITIONING":
             return (
-                <Positioning onConfirm={onPositioningOver}/>
+                <Positioning onConfirm={onPositioningOver} onRandom={randomizePositions}/>
             )
         case "STANDBY":
             return (
@@ -196,38 +255,43 @@ function GamePage () {
             )
         case "GAME_LOAD":
             return (
-                <h2>Loading...</h2>
+                <Loading/>
             )
+
         case "READY":
         case"YOUR_TURN":
         case "OPPONENT_TURN":
-            return (
-                <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
-            )
+            if( positions && ownShots && opponentShots) {
+                return (
+                    <div>
+                        <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
+                        <Chat messages={messages} userId={userID} sendMessage={handleSendMessage}/>
+                    </div>
+                )
+            }else{
+                return (
+                    <Loading />
+                )
+            }
 
-        // case "YOUR_TURN":
-        //     return (
-        //         <div>
-        //             <h3>Your turn</h3>
-        //         </div>
-        //     )
-        // case "OPPONENT_TURN":
-        //     return (
-        //         <div>
-        //             <h3>Wait</h3>
-        //         </div>
-        //     )
-        case "GAME_OVER":
+
+        case "GAME_ENDED":
             return (
-                <div>
-                    <h3>Starting the game</h3>
+                <div className={'container'}>
+                    <h2>Juego terminado!</h2>
+                    {playerWon ? (
+                        <h3> Ganaste!</h3>
+                    ):(
+                        <h3> Mas suerte la proxima! </h3>
+                    )}
+                    <button onClick={handleBackToHome}> Volver a inicio </button>
                 </div>
+
+
             )
         default:
             return (
-                <div>
-
-                </div>
+                <Loading/>
             )
     }
 

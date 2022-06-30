@@ -1,6 +1,7 @@
 import './Game.css'
-import React, {MouseEventHandler, useEffect, useState} from "react";
+import React, {createElement, MouseEventHandler, useEffect, useState} from "react";
 import {Snackbar} from "@mui/material";
+import Loading from "../loading/Loading";
 
 interface GameProps {
     positions: {id: string, x: number, y: number}[]
@@ -20,7 +21,7 @@ const Game = (props: GameProps) => {
     const [load, setLoad] = useState(true)
 
     useEffect(() => {
-        if(load){
+        if(load && props.positions){
             // console.log(props.positions)
             renderUserBoard()
             renderOpponentBoard()
@@ -30,6 +31,20 @@ const Game = (props: GameProps) => {
             setLoad(false)
         }
     }, [])
+
+    useEffect(() => {
+        if(!props.ownTurn) {
+            document.querySelector('.opponent-board')?.classList.add('unavailable')
+            opponentSquares.forEach(s => {
+                s.classList.add('unavailable')
+            })
+        }else{
+            document.querySelector('.opponent-board')?.classList.remove('unavailable')
+            opponentSquares.forEach(s => {
+                s.classList.remove('unavailable')
+            })
+        }
+    })
 
     function renderUserBoard() {
         const grid = document.querySelector('.user-board')
@@ -63,14 +78,18 @@ const Game = (props: GameProps) => {
 
     function renderShips() {
 
-        props.positions.forEach(p => {
-            const x = p.x
-            const y = p.y
+        if( props.positions !== undefined ) {
+            props.positions.forEach(p => {
+                const x = p.x
+                const y = p.y
 
-            const index = y*10 + x
-
-            userSquares[index].classList.add('taken')
-        })
+                const index = y*10 + x
+                // console.log(index)
+                // console.log(x)
+                // console.log(y)
+                userSquares[index].classList.add('taken')
+            })
+        }
 
     }
 
@@ -81,7 +100,7 @@ const Game = (props: GameProps) => {
 
             const index = y*10 + x
 
-            opponentSquares[index].classList.add( s.hit ? 'hit' : 'missed')
+            opponentSquares[index].classList.add( s.hit ? 'boom' : 'miss')
 
         })
     }
@@ -93,7 +112,7 @@ const Game = (props: GameProps) => {
 
             const index = y*10 + x
 
-            userSquares[index].classList.add( s.hit ? 'hit' : 'missed')
+            userSquares[index].classList.add( s.hit ? 'boom' : 'miss')
 
         })
     }
@@ -111,26 +130,33 @@ const Game = (props: GameProps) => {
 
     const [openError, setOpenError] = useState(false)
     function handleShowError() {
-        console.log(props.ownTurn)
+        // console.log(props.ownTurn)
         setOpenError(true)
         setTimeout(() => {
             setOpenError(false)
         }, 1000)
     }
 
+    if(props.positions === undefined) {
+
+        return <Loading />
+
+    }
+
 
     return (
-        <div className={'game container'}>
+        <div className={'game-container'}>
 
             <div className={'board-container'}>
                 <div className={'user-board'}></div>
                 <div className={'opponent-board'} onClick={(event) => handleSquareClick(event.target)}></div>
             </div>
                 {props.ownTurn ? (
-                    <h3>Es tu turno!</h3>
+                    <h3 className={'turn'}>Es tu turno!</h3>
                 ):(
-                    <h3>Es el turno de tu oponente!</h3>
+                    <h3 className={'turn'}>Es el turno de tu oponente!</h3>
                 )}
+
 
             <Snackbar
                 anchorOrigin={{ vertical:'bottom', horizontal:'center' }}

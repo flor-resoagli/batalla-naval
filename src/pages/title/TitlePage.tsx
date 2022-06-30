@@ -15,7 +15,7 @@ function TitlePage() {
     const handleLogIn = async (token: string) => {
 
         return userAPI.postUserToken(token).then((r) => {
-            console.log(r)
+            // console.log(r)
             sessionStorage.setItem("player", JSON.stringify(r))
         })
     }
@@ -24,8 +24,9 @@ function TitlePage() {
     //initialize google client and google button for log in
     useEffect(() => {
         // global google
-        // @ts-ignore
 
+
+        // @ts-ignore
         google.accounts.id.initialize({
             client_id: "471985862015-nm599odp85d7b8lfkhf1nss4m1m1vjtc.apps.googleusercontent.com",
             callback: handleCallbackResponse
@@ -40,7 +41,7 @@ function TitlePage() {
         // @ts-ignore
         //google.accounts.id.prompt();
 
-    }, []);
+    }, [google]);
 
     const navigate = useNavigate();
 

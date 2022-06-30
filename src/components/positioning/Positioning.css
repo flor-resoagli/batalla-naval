@@ -1,7 +1,14 @@
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    row-gap: 20px;
+}
+
 .user-board {
     margin: 2vmin;
     display: grid;
-    background-color: hsla(196, 38%, 61%, 0.53);
+    background-color: hsla(196, 38%, 61%, 0.77);
     grid-template-rows: repeat(10, 5vmin);
     grid-template-columns: repeat(10, 5vmin);
 }
@@ -9,7 +16,7 @@
 .rotate-btn {
     height: 30px;
     margin-bottom: 20px;
-
+    margin-left: 20px;
 }
 
 .user-board div {

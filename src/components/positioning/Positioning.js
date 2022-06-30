@@ -1,7 +1,7 @@
 import './Positioning.css'
 import React, {useEffect, useState} from "react";
 
-function Positioning ( {onConfirm} ) {
+function Positioning ( {onConfirm, onRandom} ) {
 
     //LOAD BOARD
 
@@ -195,8 +195,12 @@ function Positioning ( {onConfirm} ) {
 
     }
 
+    const handleRandomClick = () => {
+        onRandom()
+    }
+
     return (
-        <div className={'container'}>
+        <div className={'game container'}>
 
             <h3> Ubica sus barcos! </h3>
 
@@ -205,8 +209,10 @@ function Positioning ( {onConfirm} ) {
 
             </div>
 
-
-            <button className={'rotate-btn'} onClick={handleButtonClick} > {isOver ? "Confirmar" : "Rotar"} </button>
+            <div className={'btn-container'}>
+                <button className={'rotate-btn'} onClick={handleButtonClick} > {isOver ? "Confirmar" : "Rotar"} </button>
+                <button className={'rotate-btn'} onClick={handleRandomClick}> Aleatorio </button>
+            </div>
 
             <div className="board-container">
                 <div className="grid-display">
