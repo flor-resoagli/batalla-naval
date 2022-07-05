@@ -21,28 +21,45 @@ const Game = (props: GameProps) => {
     const [load, setLoad] = useState(true)
 
     useEffect(() => {
-        if(load && props.positions){
+        if( props.positions){
             // console.log(props.positions)
-            renderUserBoard()
-            renderOpponentBoard()
+            // renderUserBoard()
+            // renderOpponentBoard()
             renderShips()
-            renderOwnShots()
-            renderOpponentShots()
-            setLoad(false)
+            // setLoad(false)
         }
     }, [])
 
     useEffect(() => {
+
+        renderOwnShots()
+        renderOpponentShots()
+    }, [props])
+
+    useEffect(() => {
+
+        // console.log(document.querySelectorAll('.opponent-square'))
+
         if(!props.ownTurn) {
             document.querySelector('.opponent-board')?.classList.add('unavailable')
-            opponentSquares.forEach(s => {
+
+            document.querySelectorAll('.opponent-square').forEach(s => {
+                // console.log(s.classList)
                 s.classList.add('unavailable')
             })
+
+            // opponentSquares.forEach(s => {
+            //     s.classList.add('unavailable')
+            // })
         }else{
             document.querySelector('.opponent-board')?.classList.remove('unavailable')
-            opponentSquares.forEach(s => {
-                s.classList.remove('unavailable')
+            document.querySelectorAll('.opponent-square').forEach(s => {
+                // console.log(s.classList)
+                s.classList.add('unavailable')
             })
+            // opponentSquares.forEach(s => {
+            //     s.classList.remove('unavailable')
+            // })
         }
     })
 
@@ -87,7 +104,13 @@ const Game = (props: GameProps) => {
                 // console.log(index)
                 // console.log(x)
                 // console.log(y)
-                userSquares[index].classList.add('taken')
+                document.querySelectorAll('.user-square').forEach(s => {
+                    if(s.id === String(index)){
+                        s.classList.add('taken')
+                    }
+                })
+                // document.querySelector('#'+index)
+                // userSquares[index].classList.add('taken')
             })
         }
 
@@ -100,7 +123,14 @@ const Game = (props: GameProps) => {
 
             const index = y*10 + x
 
-            opponentSquares[index].classList.add( s.hit ? 'boom' : 'miss')
+            document.querySelectorAll('.opponent-square').forEach(sq => {
+                if(sq.id === String(index)){
+                    sq.classList.add(s.hit ? 'boom' : 'miss')
+                }
+            })
+            // document.querySelector('.opponent-square #'+index)?.classList.add( s.hit ? 'boom' : 'miss')
+
+            // opponentSquares[index].classList.add( s.hit ? 'boom' : 'miss')
 
         })
     }
@@ -112,7 +142,15 @@ const Game = (props: GameProps) => {
 
             const index = y*10 + x
 
-            userSquares[index].classList.add( s.hit ? 'boom' : 'miss')
+            document.querySelectorAll('.user-square').forEach(sq => {
+                if(sq.id === String(index)){
+                    sq.classList.add(s.hit ? 'boom' : 'miss')
+                }
+            })
+
+            // document.querySelector('.user-square #'+index)?.classList.add( s.hit ? 'boom' : 'miss')
+
+            // userSquares[index].classList.add( s.hit ? 'boom' : 'miss')
 
         })
     }
@@ -120,9 +158,11 @@ const Game = (props: GameProps) => {
     function handleSquareClick(e: EventTarget) {
         // console.log(e.dataset.id)
         // console.log(props.ownTurn)
+        // @ts-ignore
+        console.log(e.id)
         if(props.ownTurn) {
             // @ts-ignore
-            props.onShoot(e.dataset.id)
+            props.onShoot(e.id)
         }else{
             handleShowError()
         }
@@ -143,13 +183,49 @@ const Game = (props: GameProps) => {
 
     }
 
+    const nums = [0,1,2,3,4,5,6,7,8,9]
+
 
     return (
         <div className={'game-container'}>
 
             <div className={'board-container'}>
-                <div className={'user-board'}></div>
-                <div className={'opponent-board'} onClick={(event) => handleSquareClick(event.target)}></div>
+                <div className={'user-board'}>
+                    {
+                        nums.flatMap(i => {
+                            return nums.map(j => {
+                                const index = i*10 + j
+                                // const square: HTMLDivElement = document.createElement('div')
+                                // square.dataset.id = String(i)
+                                // userSquares.push(square)
+                                return <div id={String(index)} className={'user-square'}></div>
+                            })
+                        })
+                    }
+                </div>
+
+
+                <div className={'opponent-board'} onClick={(event) => {
+                    // console.log(event.target)
+                    // handleSquareClick(event.target)
+                }}>
+                    {
+                        nums.flatMap(i => {
+                            return nums.map(j => {
+                                const index = i*10 + j
+                                // const square: HTMLDivElement = document.createElement('div')
+                                // square.dataset.id = String(i)
+                                // userSquares.push(square)
+                                return <div id={String(index)} className={'opponent-square'} onClick={(event) => {
+                                    console.log(event.target)
+                                    handleSquareClick(event.target)}
+                                }></div>
+                            })
+                        })
+                    }
+                </div>
+
+
             </div>
                 {props.ownTurn ? (
                     <h3 className={'turn'}>Es tu turno!</h3>

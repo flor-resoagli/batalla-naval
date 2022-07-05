@@ -85,6 +85,7 @@ function GamePage () {
                         hit: payloadData.hit
                     })
                     setOwnShots([...ownShots])
+
                 }else{
                     opponentShots.push({
                         x: payloadData.x,
@@ -95,7 +96,7 @@ function GamePage () {
                 }
                 break
 
-            case "GAME_ENDED":
+            case "GAME_OVER":
                 setPlayerWon(payloadData.winnerId === userID)
                 break
 
@@ -259,6 +260,7 @@ function GamePage () {
             )
 
         case "READY":
+        case "FEEDBACK":
         case"YOUR_TURN":
         case "OPPONENT_TURN":
             if( positions && ownShots && opponentShots) {
@@ -275,7 +277,7 @@ function GamePage () {
             }
 
 
-        case "GAME_ENDED":
+        case "GAME_OVER":
             return (
                 <div className={'container'}>
                     <h2>Juego terminado!</h2>
