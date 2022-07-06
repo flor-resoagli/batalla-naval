@@ -107,11 +107,11 @@ const ChatPage = () => {
 
     const sendPrivateValue=()=>{
         if (stompClient) {
-            var chatMessage = {
+            const chatMessage = {
                 senderName: userData.username,
-                receiverName:tab,
+                receiverName: tab,
                 message: userData.message,
-                status:"MESSAGE"
+                status: "MESSAGE"
             };
 
             if(userData.username !== tab){

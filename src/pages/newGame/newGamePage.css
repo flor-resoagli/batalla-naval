@@ -1,0 +1,59 @@
+.sm-button {
+  height: 50px;
+  font-size: 30px;
+}
+
+p {
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+}
+
+.col-container {
+  width: 100vw;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 40px;
+}
+
+.row-container {
+  column-gap: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.token-input {
+  height: 40px;
+  min-width: 300px;
+  border-width: 5px;
+  border-radius: 15px;
+  border-color: #cf4df3;
+  font-size: 17px;
+  padding-left: 15px;
+  font-family: Arial, serif;
+}
+
+.back-container {
+  font-size: 17px;
+  font-weight: bold;
+  height: 50px;
+  color: white;
+  /*margin-top: 20px;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-container:hover {
+  color: #cb87f1;
+  cursor: pointer;
+}
+
+.back-container:active {
+  color: #a250ce
+}

@@ -1,0 +1,128 @@
+.user-board {
+    width: fit-content;
+    height: fit-content;
+}
+
+.turn {
+    margin: 0;
+}
+
+.game {
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.game-container {
+    width: 60vw;
+    min-width: fit-content;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    /*margin-top: 20px;*/
+}
+
+.opponent-board {
+    margin: 2vmin;
+    display: grid;
+    width: fit-content;
+    height: fit-content;
+    /*background-color: hsla(27, 55%, 62%, 0.8);*/
+    grid-template-rows: repeat(10, 5vmin);
+    grid-template-columns: repeat(10, 5vmin);
+}
+
+.opponent-board.unavailable {
+    /*background-color: hsla(36, 17%, 57%, 0.79);*/
+
+}
+
+.opponent-board.unavailable div {
+    border: 1px solid hsl(271, 58%, 65%);
+}
+
+.opponent-board.unavailable div:hover {
+    background-color:  rgba(253, 62, 221, 0.45);
+}
+
+.opponent-board div {
+    border: 1px solid hsl(272, 84%, 93%);
+    background-color: rgba(253, 62, 221, 0.45);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.opponent-board div:hover {
+    background-color: rgba(234, 59, 204, 0.68);
+}
+
+.opponent-board div:active {
+    background-color: rgba(234, 59, 204, 0.99);
+}
+
+
+.miss,
+.boom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boom::after,
+.miss::after {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    width: 2vmin;
+    height: 2vmin;
+}
+
+.miss::after {
+    background-color: #efcdf8;
+}
+
+.boom::after {
+    background-color: #fa0473;
+}
+
+.miss::before {
+    content: '';
+    position: absolute;
+    /*animation: hit .2s ease-out forwards;*/
+    /*border: 1vmin solid white;*/
+    border-radius: 100%;
+    width: 2vmin;
+    height: 2vmin;
+}
+
+.boom {
+    animation: boom .2s ease-out forwards;
+}
+
+@keyframes hit {
+    0% {
+        opacity: 1;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(4);
+    }
+}
+
+@keyframes boom {
+    0% {
+        background-color: #ff00a6;
+    }
+
+    100% {
+        background-color: hsl(353, 100%, 84%);
+    }
+}
+

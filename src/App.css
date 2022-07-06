@@ -1,10 +1,37 @@
+@font-face {
+    font-family: Warmonger;
+    src: url("../public/fonts/warmongerbb.ttf");
+}
+
+@font-face {
+    font-family: Comic Bubble;
+    src: url("../public/fonts/ComicBoomBubbleDemo-rg44y.ttf");
+}
+
+@font-face {
+    font-family: Pixel Bubble;
+    src: url("../public/fonts/pixel-bubble.TTF");
+}
+
+@font-face {
+    font-family: Arcade;
+    src: url("../public/fonts/ARCADECLASSIC.TTF");
+}
+
 .background {
-    width: 100vw;
+    /*width: 100vw;*/
     height: 100vh;
-    background-color: #255F85;
+    background-image: url("utils/images/ship-bg.gif");
+    background-size: cover;
+    /*background-color: #255F85;*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*left: 0;*/
+}
+
+.audio {
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: 0;
 }
 
 .background-image {
@@ -31,29 +58,61 @@
     justify-content: center;
 }
 
-h1, h2, h3 {
+h1, h2 {
+    color: #CF4DF3FF;
+    font-family: "Pixel Bubble", sans-serif;
+    min-font-size: 40px;
+    font-size: 5vw;
+}
 
-    color: #d5dada;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 7vw;
+h2 {
+    font-size: 35px;
 }
 
 h3 {
     font-size: 40px;
+    font-family: Arcade, serif;
+    color: white;
+}
+
+h4 {
+    font-size: 20px;
+    color: white;
+    font-family: Arcade, serif;
 }
 
 button {
-    background-color: #d5dada;
-    color: #255F85;
-    font-family:'Times New Roman', Times, serif;
+    background-color: #80b4fc;
+    color: #CF4DF3FF;
+    font-family: Arcade, serif;
     border-radius: 27px;
-    border: none;
-    font-size: 25px;
+    border-color: #cf4df3;
+    border-width: 5px;
+    font-size: 40px;
     min-height: 40px;
-
 }
 
 button:hover {
-    background-color: #afb2b2;
-    color: #1c4560;
+    background-color: #95c2f5;
+    color: #d35bff;
+}
+
+button:active {
+    background-color: #5d96d5;
+    color: #c157e8;
+}
+
+a {
+    color: white;
+    font-size: 20px;
+    font-family: Arial, serif;
+}
+
+a:hover {
+    color: #cb87f1;
+    cursor: pointer;
+}
+
+a:active {
+    color: #a250ce
 }

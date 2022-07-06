@@ -1,0 +1,71 @@
+.waiting-page {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-btn {
+    color: #c157e8;
+    font-weight: bold;
+    font-size: 50px;
+    font-family: Arcade, serif;
+    margin-left: 20px;
+    margin-top: 20px;
+    position: fixed;
+    display: flex;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+}
+
+.back-btn:hover {
+    color: #c076ea;
+    cursor: pointer;
+}
+
+.back-btn:active {
+    color: #a250ce
+}
+
+
+.loader-container {
+    color: white;
+}
+.other-background {
+    height: 100vh;
+    background-color: #95c2f5;
+    background-image: url("../../utils/images/bg-water.gif");
+    background-size: cover;
+}
+
+.row-page {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.waiting-title {
+    font-size: 50px;
+}
+
+.loser-image {
+    width: 252px;
+    height: 212px;
+    background-size: cover;
+    background-image: url("../../utils/images/loser.gif");
+    margin-bottom: 40px;
+}
+
+.winner-image {
+    width: 459px;
+    height: 257px;
+    background-size: cover;
+    background-image: url("../../utils/images/win.gif");
+    margin-bottom: 40px;
+}

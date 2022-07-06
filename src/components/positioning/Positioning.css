@@ -1,0 +1,192 @@
+.btn-container {
+    display: flex;
+    width: 500px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 20px;
+}
+
+.user-board {
+    margin: 2vmin;
+    display: grid;
+    /*background-color: rgb(195, 79, 255);*/
+    border-radius: 20px;
+    grid-template-rows: repeat(10, 5vmin);
+    grid-template-columns: repeat(10, 5vmin);
+}
+
+.rotate-btn {
+    height: 30px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.shuffle-button {
+    border-radius: 20px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-board div {
+    border: 1px solid hsl(0, 0%, 100%);
+    background-color: rgba(176, 63, 248, 0.36);
+    border-radius: 7px;
+}
+
+.user-board div.taken {
+    background-color: #e8c3f5;
+
+}
+
+.grid-display {
+    display: flex;
+    margin-top: 20px;
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+}
+
+.ship > div {
+    width: 4.6vmin;
+    height: 4.6vmin;
+}
+
+.ship {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1vmin;
+    width: calc(5vmin * var(--width, 1));
+    height: calc(4.5vmin * var(--height, 1));
+    border-radius: 10px;
+    background-color: #95b3b4;
+}
+
+.destroyer-container {
+    --width: 2;
+}
+
+.destroyer-container-vertical {
+    --height: 2;
+    --width: 1;
+}
+
+.submarine-container,
+.cruiser-container {
+    --width: 3;
+}
+
+.submarine-container-vertical,
+.cruiser-container-vertical {
+    --height: 3;
+    --width: 1;
+}
+
+.battleship-container {
+    --width: 4;
+}
+
+.battleship-container-vertical {
+    --height: 4;
+    --width: 1;
+}
+
+.carrier-container {
+    --width: 5;
+}
+
+.carrier-container-vertical {
+    --height: 5;
+    --width: 1;
+}
+
+.taken,
+.ship {
+    position: relative;
+    border: none;
+    background-color: #e3a2fc;
+}
+
+.ship div {
+    border-width: 1px;
+    border-color: white;
+}
+
+/*.taken.start.vertical,*/
+/*.taken.start.vertical::before {*/
+/*    border-top-left-radius: 50%;*/
+/*    border-top-right-radius: 50%;*/
+/*}*/
+
+/*.taken.end.vertical,*/
+/*.taken.end.vertical::before {*/
+/*    border-bottom-left-radius: 50%;*/
+/*    border-bottom-right-radius: 50%;*/
+/*}*/
+
+/*.taken.start.horizontal,*/
+/*.taken.start.horizontal::before {*/
+/*    border-top-left-radius: 50%;*/
+/*    border-bottom-left-radius: 50%;*/
+/*}*/
+
+/*.taken.end.horizontal,*/
+/*.taken.end.horizontal::before {*/
+/*    border-top-right-radius: 50%;*/
+/*    border-bottom-right-radius: 50%;*/
+/*}*/
+
+.taken.vertical::before,
+.taken.horizontal::before {
+    content: '';
+    position: absolute;
+    border: none;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+}
+
+.taken.horizontal::before {
+    /*animation: ripplesY 3s linear infinite;*/
+    /*border: .3vmin solid white;*/
+    border-left: none;
+    border-right: none;
+}
+
+.taken.vertical::before {
+    /*animation: ripplesX 3s linear infinite;*/
+    /*border: .3vmin solid white;*/
+    border-top: none;
+    border-bottom: none;
+}
+
+@keyframes ripplesX {
+    0% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scaleX(1.5);
+    }
+}
+
+@keyframes ripplesY {
+    0% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scaleY(1.5);
+    }
+}

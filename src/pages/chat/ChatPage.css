@@ -8,11 +8,12 @@
 }
 
 .chat-box {
-    background-color: #e8f1f1;
-    border-radius: 20px;
-    width: 80vw;
+    background-color: rgba(110, 200, 248, 0.73);
+    border-radius: 30px;
+    border: rgba(193, 81, 253, 0.71) 7px solid;
+    width: 30vw;
     max-width: 800px;
-    height: 50vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,13 +21,14 @@
 }
 
 .chat-content {
-    height: 90%;
+    height: 100%;
     width: 90%;
     display: flex;
     overflow-x: hidden;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
+    padding-bottom: 20px;
 
 }
 
@@ -36,15 +38,17 @@
     list-style-type: none;
     overflow-y: scroll;
     width: 100%;
+    padding-inline-start: 0;
 }
 
 .message {
-    background-color: #85c2a1;
-    color: #517562;
-    border-radius: 10px;
+    background-color: rgba(253, 62, 221, 0.58);
+    color: #5e1d73;
+    border-radius: 30px;
     height: fit-content;
-    padding: 10px;
-    max-width: 90%;
+    padding: 10px 0 10px 30px;
+    width: 400px;
+    max-width: 70%;
     margin-bottom: 5px;
     overflow-x: hidden;
 }
@@ -59,29 +63,28 @@
 }
 
 .message.self {
-    background-color: #8fbdbd;
-    color: #255F85;
-    border-radius: 10px;
+    background-color: rgba(115, 63, 248, 0.67);
+    color: rgba(56, 35, 117, 0.79);
     height: fit-content;
-    padding: 10px;
-    width: 90%;
     margin-bottom: 5px;
     overflow-x: hidden;
 }
 
 .avatar {
-    background-color: #64af92;
+    background-color: rgba(221, 168, 245, 0);
+    font-weight: bold;
     width: fit-content;
     height: fit-content;
-    padding: 5px;
-    border-radius: 5px;
+    /*padding: 5px;*/
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 .avatar.self {
-    background-color: #70abb4;
+    /*background-color: #6698c2;*/
     width: fit-content;
     height: fit-content;
-    padding: 5px;
+    /*padding: 5px;*/
     border-radius: 5px;
 }
 
@@ -98,18 +101,20 @@
 .input-message {
     width: 70%;
     height: fit-content;
-    border-radius: 5px;
-    border: none;
+    min-height: 30px;
+    border-width: 5px;
+    border-radius: 15px;
+    border-color: #cf4df3;
     padding: 10px;
     font-size: 17px;
     font-family: "Helvetica", sans-serif;
 }
 
 .send-button {
-    width: 20%;
-    border-radius: 5px;
-    border: none;
-    font-size: 20px;
+    width: 90px;
+    height: 60px;
+    font-size: 30px;
+    margin-left: 10px;
 }
 
 .register {
