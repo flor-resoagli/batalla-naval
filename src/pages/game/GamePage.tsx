@@ -35,7 +35,7 @@ function GamePage () {
     // @ts-ignore
     const userID = JSON.parse(sessionStorage.getItem("player")).id
     const gameID = useParams().gameID
-    const [gameState, setGameState] = useState("WAITING")
+    const [gameState, setGameState] = useState("LOADING")
 
     const [onLoad, setOnLoad] = useState(true)
     const [connected, setConnected] = useState(false)

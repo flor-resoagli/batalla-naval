@@ -237,7 +237,7 @@ const Game = (props: GameProps) => {
             <Snackbar
                 anchorOrigin={{ vertical:'bottom', horizontal:'center' }}
                 open={openError}
-                message="No puedes atacar si no es tu turno!"/>
+                message="Wait your turn to attack!"/>
 
         </div>
     )

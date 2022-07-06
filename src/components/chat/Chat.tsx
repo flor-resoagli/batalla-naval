@@ -21,6 +21,10 @@ const Chat = (props: ChatProps) => {
         setMessage(event.target.value)
     }
 
+    const clearMessage = () => {
+        setMessage('')
+    }
+
     return (
         <div className={'chat-container'}>
             <div className="chat-box">
@@ -36,8 +40,11 @@ const Chat = (props: ChatProps) => {
                     </ul>
 
                     <div className="send-message">
-                        <input type="text" className="input-message" placeholder="Enter the message" onChange={(event) => handleMessageChange(event)}/>
-                        <button type="button" className="start-button" onClick={() => {props.sendMessage(message)}} >send</button>
+                        <input type="text" className="input-message" placeholder="Enter the message" value= {message} onChange={(event) => handleMessageChange(event)}/>
+                        <button type="button" className="start-button" onClick={() => {
+                            props.sendMessage(message)
+                            clearMessage()
+                        }} >send</button>
                     </div>
                 </div>
 
