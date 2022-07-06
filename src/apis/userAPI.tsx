@@ -1,5 +1,5 @@
 
-const apiURL = "http://localhost:8080/player"
+const apiURL = " https://battleshiips.herokuapp.com/player"
 
 class UserAPI {
 

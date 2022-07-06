@@ -55,7 +55,7 @@ function GamePage () {
     }
 
     const connect = () =>{
-        let Sock = new SockJS('http://localhost:8080/battleship');
+        let Sock = new SockJS(' https://battleshiips.herokuapp.com/battleship');
         stompClient = over(Sock);
         if(stompClient){
             stompClient.connect({},onConnected, onError);
