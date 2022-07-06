@@ -1,5 +1,5 @@
 
-const apiURL = "http://localhost:8080/gameroom"
+const apiURL = " https://battleshiips.herokuapp.com/gameroom"
 
 class GameAPI {
 
