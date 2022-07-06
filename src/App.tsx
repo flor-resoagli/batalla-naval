@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import "./App.css";
-import Background from "./utils/images/img-bg.jpg";
 import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import TitlePage from "./pages/title/TitlePage";
 import ChatPage from "./pages/chat/ChatPage";
@@ -22,6 +21,20 @@ function App() {
             return children;
         }
     }
+
+    useEffect(() => {
+        const bg: HTMLMediaElement | null = document.querySelector('.audio')
+
+        if(bg) {
+            // bg.play()
+            bg.addEventListener('timeupdate', function (){
+                if (bg.currentTime >= 2*60+30) {
+                    bg.currentTime = 0;
+                    bg.play()
+                }
+            }, false);
+        }
+    }, [])
 
     return (
       <div className={'background'}>
