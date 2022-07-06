@@ -188,8 +188,9 @@ const Game = (props: GameProps) => {
 
     return (
         <div className={'game-container'}>
-
+            <h1> Battleships </h1>
             <div className={'board-container'}>
+
                 <div className={'user-board'}>
                     {
                         nums.flatMap(i => {

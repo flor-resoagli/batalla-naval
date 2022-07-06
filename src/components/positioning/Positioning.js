@@ -1,5 +1,6 @@
 import './Positioning.css'
 import React, {useEffect, useState} from "react";
+import {Shuffle} from "@mui/icons-material";
 
 function Positioning ( {onConfirm, onRandom} ) {
 
@@ -199,6 +200,10 @@ function Positioning ( {onConfirm, onRandom} ) {
         onRandom()
     }
 
+    const handleReset = () => {
+        window.location.reload()
+    }
+
     return (
         <div className={'game container'}>
 
@@ -211,7 +216,8 @@ function Positioning ( {onConfirm, onRandom} ) {
 
             <div className={'btn-container'}>
                 <button className={'start-button'} onClick={handleButtonClick} > {isOver ? "Confirm" : "Rotate"} </button>
-                <button className={'start-button'} onClick={handleRandomClick}> Random </button>
+                <button className={'start-button'} onClick={handleReset}> Reset </button>
+                <button className={'shuffle-button'} onClick={handleRandomClick}> <Shuffle fontSize={'large'}/> </button>
             </div>
 
             <div className="board-container">

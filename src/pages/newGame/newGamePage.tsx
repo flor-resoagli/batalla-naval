@@ -2,6 +2,7 @@ import "./newGamePage.css"
 import {useState} from "react";
 import {gameAPI} from "../../apis/gameAPI";
 import {useNavigate} from "react-router-dom";
+import {ArrowBack} from "@mui/icons-material";
 
 function NewGamePage() {
 
@@ -48,6 +49,7 @@ function NewGamePage() {
                             </div>
                             <p> ...or create a new game! </p>
                             <button className={'start-button'} onClick={handleNewGame}>Create</button>
+                            <div className={'back-container'} onClick={() => navigate('/home')}> <ArrowBack/>   Back to home </div>
                         </div>
                     </div>
                 )}

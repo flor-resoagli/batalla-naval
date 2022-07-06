@@ -1,6 +1,6 @@
 .btn-container {
     display: flex;
-    width: 350px;
+    width: 500px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -22,6 +22,14 @@
     margin-left: 20px;
 }
 
+.shuffle-button {
+    border-radius: 20px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .user-board div {
     border: 1px solid hsl(0, 0%, 100%);
     background-color: rgba(176, 63, 248, 0.36);
@@ -35,6 +43,7 @@
 
 .grid-display {
     display: flex;
+    margin-top: 20px;
 }
 
 .board-container {
@@ -101,7 +110,7 @@
 .ship {
     position: relative;
     border: none;
-    background-color: #e8c3f5;
+    background-color: #e3a2fc;
 }
 
 .ship div {

@@ -11,9 +11,9 @@
     background-color: rgba(110, 200, 248, 0.73);
     border-radius: 30px;
     border: rgba(193, 81, 253, 0.71) 7px solid;
-    width: 80vw;
+    width: 30vw;
     max-width: 800px;
-    height: 30vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,13 +21,14 @@
 }
 
 .chat-content {
-    height: 90%;
+    height: 100%;
     width: 90%;
     display: flex;
     overflow-x: hidden;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
+    padding-bottom: 20px;
 
 }
 
@@ -37,15 +38,17 @@
     list-style-type: none;
     overflow-y: scroll;
     width: 100%;
+    padding-inline-start: 0;
 }
 
 .message {
-    background-color: rgba(245, 121, 250, 0.95);
+    background-color: rgba(253, 62, 221, 0.58);
     color: #5e1d73;
     border-radius: 30px;
     height: fit-content;
     padding: 10px 0 10px 30px;
-    max-width: 90%;
+    width: 400px;
+    max-width: 70%;
     margin-bottom: 5px;
     overflow-x: hidden;
 }
@@ -60,7 +63,7 @@
 }
 
 .message.self {
-    background-color: rgba(119, 113, 238, 0.98);
+    background-color: rgba(115, 63, 248, 0.67);
     color: rgba(56, 35, 117, 0.79);
     height: fit-content;
     margin-bottom: 5px;
@@ -108,11 +111,10 @@
 }
 
 .send-button {
-    width: 120px;
-    height: 40px;
-    border-radius: 5px;
-    border: none;
-    font-size: 20px;
+    width: 90px;
+    height: 60px;
+    font-size: 30px;
+    margin-left: 10px;
 }
 
 .register {

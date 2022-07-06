@@ -14,12 +14,14 @@
 }
 
 .game-container {
-    width: 100vw;
-    height: 60vh;
+    width: 60vw;
+    min-width: fit-content;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 20px;
     /*margin-top: 20px;*/
 }
 

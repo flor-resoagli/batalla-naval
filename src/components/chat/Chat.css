@@ -1,11 +1,23 @@
 .chat {
-    width: 100vw;
-    height: fit-content;
+    height: 100%;
+    width: 30vw;
 }
 
 .chat-container {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.message-container {
+    width: available;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.message-container.self {
+    width: available;
+    display: flex;
+    justify-content: flex-end;
 }

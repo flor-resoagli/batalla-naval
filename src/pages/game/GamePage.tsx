@@ -1,5 +1,5 @@
 import './GamePage.css'
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import SockJS from "sockjs-client";
 import {over} from "stompjs";
 import {useNavigate, useParams} from "react-router-dom";
@@ -11,6 +11,7 @@ import Game from "../../components/game/Game";
 import Loading from "../../components/loading/Loading";
 import game from "../../components/game/Game";
 import Chat from "../../components/chat/Chat";
+import {ArrowBack, ArrowCircleLeft} from "@mui/icons-material";
 
 let stompClient: {
     connect: (arg0: {}, arg1: () => void, arg2: (err: any) => void) => void;
@@ -93,6 +94,33 @@ function GamePage () {
                         hit: payloadData.hit
                     })
                     setOpponentShots([...opponentShots])
+                }
+                if(payloadData.hit) {
+                    const sound: HTMLMediaElement | null= document.querySelector(".hit-audio")
+                    if(sound){
+                        sound.currentTime = 0
+                        sound.play()
+                        sound.addEventListener('timeupdate', function (){
+                            if (sound.currentTime >= 2) {
+                                sound.pause();
+                            }
+                        }, false);
+                    }
+                    sound?.play()
+
+                }else{
+                    const sound: HTMLMediaElement | null= document.querySelector(".miss-audio")
+                    if(sound){
+                        sound.currentTime = 2.5
+                        sound.play()
+                        sound.addEventListener('timeupdate', function (){
+                            if (sound.currentTime >= 4) {
+                                sound.pause();
+                            }
+                        }, false);
+                    }
+                    sound?.play()
+
                 }
                 break
 
@@ -207,6 +235,7 @@ function GamePage () {
         if(stompClient) {
             stompClient.send("/app/shoot", {}, JSON.stringify(shootMessage))
         }
+
     }
 
     const randomizePositions = () => {
@@ -239,30 +268,48 @@ function GamePage () {
 
     }
 
+    const handleExit = () => {
+
+        var exitMessage = {
+            gameRoomId: gameID as RandomUUIDOptions,
+            exitedPlayerId: userID
+        }
+
+        if(stompClient) {
+            stompClient.send("/app/endGame", {}, JSON.stringify(exitMessage))
+        }
+
+        navigate("/home")
+    }
+
 
     switch (gameState) {
 
         case "WAITING":
             return (
                 <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                     <Waiting gameID={gameID?gameID:""}/>
                 </div>
             )
         case "POSITIONING":
             return (
                 <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                     <Positioning onConfirm={onPositioningOver} onRandom={randomizePositions}/>
                 </div>
             )
         case "STANDBY":
             return (
                 <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                     <Standby />
                 </div>
             )
         case "GAME_LOAD":
             return (
                 <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                     <Loading/>
                 </div>
             )
@@ -274,13 +321,23 @@ function GamePage () {
             if( positions && ownShots && opponentShots) {
                 return (
                     <div className={'other-background'}>
-                        <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
-                        <Chat messages={messages} userId={userID} sendMessage={handleSendMessage}/>
+                        <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
+                        <div className={'row-page'}>
+                            <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
+                            <Chat messages={messages} userId={userID} sendMessage={handleSendMessage}/>
+                        </div>
+                        <audio className={'miss-audio'}>
+                            <source src={"https://cdn.pixabay.com/download/audio/2021/08/09/audio_0dcf482f2f.mp3?filename=jump-into-water-splash-sound-6999.mp3"}/>
+                        </audio>
+                        <audio className={'hit-audio'}>
+                            <source src={"https://cdn.pixabay.com/download/audio/2021/12/20/audio_4890859f48.mp3?filename=hit-sound-effect-12445.mp3"}/>
+                        </audio>
                     </div>
                 )
             }else{
                 return (
                     <div className={'other-background'}>
+                        <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                         <Loading />
                     </div>
                 )
@@ -290,6 +347,7 @@ function GamePage () {
         case "GAME_OVER":
             return (
                 <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                     <div className={'container'}>
                         <h1>Game Over!</h1>
                         {playerWon ? (
@@ -306,9 +364,47 @@ function GamePage () {
                     </div>
                 </div>
             )
+
+        case "ERROR":
+            return (
+                <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
+                    <div className={'waiting-page'}>
+                        <h1> So sorry :( </h1>
+                        <p> We couldn't find the game you're looking for, maybe try again later? </p>
+                        <button className={'start-button'} onClick={() => {navigate("/home")}}> Back to home </button>
+                    </div>
+                </div>
+            )
+
+        case "GAME_ENDED":
+            return (
+                <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
+                    <div className={'waiting-page'}>
+                        <h1> So sorry :( </h1>
+                        <p> Looks like your opponent abandonded the game, try making a new game! </p>
+                        <button className={'start-button'} onClick={() => {navigate("/home")}}> Back to home </button>
+                    </div>
+                </div>
+            )
+
+        case "GAME_FULL":
+            return (
+                <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
+                    <div className={'waiting-page'}>
+                        <h1> Game is already full </h1>
+                        <p> Try joining a different game, or create your own! </p>
+                        <button className={'start-button'} onClick={() => {navigate("/home")}}> Back to home </button>
+                    </div>
+                </div>
+            )
+
         default:
             return (
                 <div className={'other-background'}>
+                    <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                     <Loading/>
                 </div>
 

@@ -1,6 +1,7 @@
 import "./HomePage.css"
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {userAPI} from "../../apis/userAPI";
 
 function HomePage() {
     const navigate = useNavigate()
@@ -18,7 +19,7 @@ function HomePage() {
         const session = sessionStorage.getItem("player")
         if(session) {
             const p = JSON.parse(session)
-            setPlayer(p)
+            userAPI.getUser(p.id).then(r => setPlayer(r))
         }
     }, [])
 
