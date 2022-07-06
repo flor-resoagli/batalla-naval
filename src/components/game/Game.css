@@ -28,60 +28,39 @@
     display: grid;
     width: fit-content;
     height: fit-content;
-    background-color: hsla(27, 55%, 62%, 0.8);
+    /*background-color: hsla(27, 55%, 62%, 0.8);*/
     grid-template-rows: repeat(10, 5vmin);
     grid-template-columns: repeat(10, 5vmin);
 }
 
 .opponent-board.unavailable {
-    background-color: hsla(36, 17%, 57%, 0.79);
+    /*background-color: hsla(36, 17%, 57%, 0.79);*/
 
 }
 
 .opponent-board.unavailable div {
-    border: 1px solid hsla(24, 3%, 37%, 0.53);
+    border: 1px solid hsl(271, 58%, 65%);
 }
 
 .opponent-board.unavailable div:hover {
-    background-color: transparent;
+    background-color:  rgba(253, 62, 221, 0.45);
 }
 
 .opponent-board div {
-    border: 1px solid hsla(27, 37%, 35%, 0.53);
+    border: 1px solid hsl(272, 84%, 93%);
+    background-color: rgba(253, 62, 221, 0.45);
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .opponent-board div:hover {
-    background-color: hsla(27, 37%, 35%, 0.53);
+    background-color: rgba(234, 59, 204, 0.68);
 }
 
 .opponent-board div:active {
-    background-color: hsla(27, 37%, 35%, 1);
-}
-
-.opponent-board div.missed {
-    background-color: #214a62;
-}
-
-.opponent-board div.hit {
-    background-color: rgba(180, 56, 16, 0.82);
-    border-radius: 40px;
-}
-
-.user-board div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.user-board div.hit {
-    background-color: blue;
-}
-
-.user-board div.missed {
-    background-color: yellow;
+    background-color: rgba(234, 59, 204, 0.99);
 }
 
 
@@ -102,11 +81,11 @@
 }
 
 .miss::after {
-    background-color: #bfddf3;
+    background-color: #efcdf8;
 }
 
 .boom::after {
-    background-color: #c22727;
+    background-color: #fa0473;
 }
 
 .miss::before {
@@ -120,7 +99,7 @@
 }
 
 .boom {
-    /*animation: boom .2s ease-out forwards;*/
+    animation: boom .2s ease-out forwards;
 }
 
 @keyframes hit {
@@ -137,11 +116,11 @@
 
 @keyframes boom {
     0% {
-        background-color: red;
+        background-color: #ff00a6;
     }
 
     100% {
-        background-color: hsl(0, 0%, 80%);
+        background-color: hsl(353, 100%, 84%);
     }
 }
 

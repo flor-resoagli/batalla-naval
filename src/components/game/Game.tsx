@@ -228,9 +228,9 @@ const Game = (props: GameProps) => {
 
             </div>
                 {props.ownTurn ? (
-                    <h3 className={'turn'}>Es tu turno!</h3>
+                    <h3 className={'turn'}>It's your turn!</h3>
                 ):(
-                    <h3 className={'turn'}>Es el turno de tu oponente!</h3>
+                    <h3 className={'turn'}>Waiting for opponent...</h3>
                 )}
 
 

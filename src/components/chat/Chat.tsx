@@ -28,16 +28,16 @@ const Chat = (props: ChatProps) => {
                     <ul className="chat-messages">
                         {props.messages.map(chat=>(
                             <li className={`message ${chat.user === props.userId && "self"}`}  >
-                                {chat.user !== props.userId && <div className="avatar">Oponente</div>}
-                                {chat.user === props.userId && <div className="avatar self">Yo</div>}
+                                {chat.user !== props.userId && <div className="avatar">Opponent</div>}
+                                {chat.user === props.userId && <div className="avatar self">Me</div>}
                                 <div className="message-data">{chat.message}</div>
                             </li>
                         ))}
                     </ul>
 
                     <div className="send-message">
-                        <input type="text" className="input-message" placeholder="enter the message" onChange={(event) => handleMessageChange(event)}/>
-                        <button type="button" className="send-button" onClick={() => {props.sendMessage(message)}} >send</button>
+                        <input type="text" className="input-message" placeholder="Enter the message" onChange={(event) => handleMessageChange(event)}/>
+                        <button type="button" className="start-button" onClick={() => {props.sendMessage(message)}} >send</button>
                     </div>
                 </div>
 

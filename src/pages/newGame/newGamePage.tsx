@@ -27,26 +27,31 @@ function NewGamePage() {
     }
 
     return (
-        <div className={'container'}>
-            <div className={'title-container'}>
-                <h1> Nuevo Juego  </h1>
-            </div>
-            {loading ? (
-                <div>
-                    <h3>Loading...</h3>
+        <div className={'page-container'}>
+            <div className={'body-container'}>
+                <div className={'title-container'}>
+                    <h1> New Game  </h1>
                 </div>
-            ):(
-                <div className={'content-container'}>
-                    <div className={'col-container'}>
-                        <div className={'row-container'}>
-                            <input placeholder={'Token'} className={'name-input'}
-                                   onChange={(e) => {setPrivateGameToken(e.target.value)}}/>
-                            <button className={'sm-button'} onClick={handleJoinGame}> Unirse </button>
-                        </div>
-                        <button onClick={handleNewGame}>Crear Juego</button>
+                {loading ? (
+                    <div>
+                        <h3>Loading...</h3>
                     </div>
-                </div>
-            )}
+                ):(
+                    <div className={'content-container'}>
+                        <div className={'col-container'}>
+
+                            <p>Join an existing game with a token... </p>
+                            <div className={'row-container'}>
+                                <input placeholder={'Token'} className={'token-input'}
+                                       onChange={(e) => {setPrivateGameToken(e.target.value)}}/>
+                                <button className={'sm-button'} onClick={handleJoinGame}> Join </button>
+                            </div>
+                            <p> ...or create a new game! </p>
+                            <button className={'start-button'} onClick={handleNewGame}>Create</button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     )
 

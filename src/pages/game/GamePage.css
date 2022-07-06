@@ -7,5 +7,31 @@
 }
 
 .loader-container {
-    color: #d5dada;
+    color: white;
+}
+.other-background {
+    height: 100vh;
+    background-color: #95c2f5;
+    background-image: url("../../utils/images/bg-water.gif");
+    background-size: cover;
+}
+
+.waiting-title {
+    font-size: 50px;
+}
+
+.loser-image {
+    width: 252px;
+    height: 212px;
+    background-size: cover;
+    background-image: url("../../utils/images/loser.gif");
+    margin-bottom: 40px;
+}
+
+.winner-image {
+    width: 391px;
+    height: 170px;
+    background-size: cover;
+    background-image: url("../../utils/images/win.gif");
+    margin-bottom: 40px;
 }

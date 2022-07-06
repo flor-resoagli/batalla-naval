@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import "./App.css";
 import Background from "./utils/images/img-bg.jpg";
 import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
@@ -8,6 +8,7 @@ import HomePage from "./pages/home/HomePage";
 import GamePage from "./pages/game/GamePage";
 import NewGamePage from "./pages/newGame/newGamePage";
 import WaitingRoomPage from "./pages/waitingRoom/WaitingRoomPage";
+
 
 function App() {
 
@@ -24,9 +25,11 @@ function App() {
 
     return (
       <div className={'background'}>
-          <img src={Background} className={'background-image'} alt={'battleship'}/>
+          {/*<audio src={bgMusic} autoPlay />*/}
+          {/*<img src={Background} className={'background-image'} alt={'battleship'}/>*/}
             <Router>
                 <div className={'pages'}>
+
                   <Routes>
 
                         <Route path={"/"} element={<TitlePage />}/>
@@ -64,6 +67,9 @@ function App() {
                       }/>
 
                   </Routes>
+                    <audio controls autoPlay className={'audio'}>
+                        <source src={"https://www.fesliyanstudios.com/musicfiles/2019-12-09_-_Retro_Forest_-_David_Fesliyan/2019-12-09_-_Retro_Forest_-_David_Fesliyan.mp3"} type={"audio/mpeg"}/>
+                    </audio>
                 </div>
             </Router>
 

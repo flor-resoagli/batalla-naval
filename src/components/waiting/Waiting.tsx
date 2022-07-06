@@ -17,11 +17,11 @@ function Waiting (props: {gameID: string}) {
 
     return (
         <div className={"waiting-page"}>
-            <h3>Waiting for game</h3>
+            <h1 className={'waiting-title'}>Waiting for game</h1>
             <div className={'loader-container'}>
-                <CircularProgress color={'inherit'}/>
+                <CircularProgress color={'inherit'} />
             </div>
-            <h4>Invite other players with code:</h4>
+            <h3>Invite other players with code:</h3>
             <a onClick={handleCopyToken}>{props.gameID}</a>
             <Snackbar
                 anchorOrigin={{ vertical:'bottom', horizontal:'center' }}

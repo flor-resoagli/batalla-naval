@@ -244,19 +244,27 @@ function GamePage () {
 
         case "WAITING":
             return (
-                <Waiting gameID={gameID?gameID:""}/>
+                <div className={'other-background'}>
+                    <Waiting gameID={gameID?gameID:""}/>
+                </div>
             )
         case "POSITIONING":
             return (
-                <Positioning onConfirm={onPositioningOver} onRandom={randomizePositions}/>
+                <div className={'other-background'}>
+                    <Positioning onConfirm={onPositioningOver} onRandom={randomizePositions}/>
+                </div>
             )
         case "STANDBY":
             return (
-                <Standby />
+                <div className={'other-background'}>
+                    <Standby />
+                </div>
             )
         case "GAME_LOAD":
             return (
-                <Loading/>
+                <div className={'other-background'}>
+                    <Loading/>
+                </div>
             )
 
         case "READY":
@@ -265,35 +273,45 @@ function GamePage () {
         case "OPPONENT_TURN":
             if( positions && ownShots && opponentShots) {
                 return (
-                    <div>
+                    <div className={'other-background'}>
                         <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
                         <Chat messages={messages} userId={userID} sendMessage={handleSendMessage}/>
                     </div>
                 )
             }else{
                 return (
-                    <Loading />
+                    <div className={'other-background'}>
+                        <Loading />
+                    </div>
                 )
             }
 
 
         case "GAME_OVER":
             return (
-                <div className={'container'}>
-                    <h2>Juego terminado!</h2>
-                    {playerWon ? (
-                        <h3> Ganaste!</h3>
-                    ):(
-                        <h3> Mas suerte la proxima! </h3>
-                    )}
-                    <button onClick={handleBackToHome}> Volver a inicio </button>
+                <div className={'other-background'}>
+                    <div className={'container'}>
+                        <h1>Game Over!</h1>
+                        {playerWon ? (
+                            <div>
+                                {/*<h3> nice. </h3>*/}
+                                <div className={'winner-image'}> </div>
+                            </div>
+                        ):(
+                            <div>
+                                <div className={'loser-image'}> </div>
+                            </div>
+                        )}
+                        <button onClick={handleBackToHome}> Play again </button>
+                    </div>
                 </div>
-
-
             )
         default:
             return (
-                <Loading/>
+                <div className={'other-background'}>
+                    <Loading/>
+                </div>
+
             )
     }
 

@@ -1,14 +1,17 @@
 .btn-container {
     display: flex;
+    width: 350px;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     row-gap: 20px;
 }
 
 .user-board {
     margin: 2vmin;
     display: grid;
-    background-color: hsla(196, 38%, 61%, 0.77);
+    /*background-color: rgb(195, 79, 255);*/
+    border-radius: 20px;
     grid-template-rows: repeat(10, 5vmin);
     grid-template-columns: repeat(10, 5vmin);
 }
@@ -20,7 +23,14 @@
 }
 
 .user-board div {
-    border: 1px solid hsla(202, 50%, 26%, 0.57);
+    border: 1px solid hsl(0, 0%, 100%);
+    background-color: rgba(176, 63, 248, 0.36);
+    border-radius: 7px;
+}
+
+.user-board div.taken {
+    background-color: #e8c3f5;
+
 }
 
 .grid-display {
@@ -45,7 +55,7 @@
     margin: 1vmin;
     width: calc(5vmin * var(--width, 1));
     height: calc(4.5vmin * var(--height, 1));
-    /*border-radius: 2.3vmin;*/
+    border-radius: 10px;
     background-color: #95b3b4;
 }
 
@@ -91,7 +101,12 @@
 .ship {
     position: relative;
     border: none;
-    background-color: hsl(0, 0%, 80%);
+    background-color: #e8c3f5;
+}
+
+.ship div {
+    border-width: 1px;
+    border-color: white;
 }
 
 /*.taken.start.vertical,*/

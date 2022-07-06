@@ -6,7 +6,7 @@ function Standby() {
     return (
         <div className={"waiting-page"}>
 
-            <h4>Esperando al segundo jugador...</h4>
+            <h2 >Waiting for opponent...</h2>
             <div className={'loader-container'}>
                 <CircularProgress color={'inherit'}/>
             </div>

@@ -202,7 +202,7 @@ function Positioning ( {onConfirm, onRandom} ) {
     return (
         <div className={'game container'}>
 
-            <h3> Ubica sus barcos! </h3>
+            <h1 className={'waiting-title'}> Place your ships! </h1>
 
             <div className={'board-container'}>
                 <div className={'user-board'}></div>
@@ -210,8 +210,8 @@ function Positioning ( {onConfirm, onRandom} ) {
             </div>
 
             <div className={'btn-container'}>
-                <button className={'rotate-btn'} onClick={handleButtonClick} > {isOver ? "Confirmar" : "Rotar"} </button>
-                <button className={'rotate-btn'} onClick={handleRandomClick}> Aleatorio </button>
+                <button className={'start-button'} onClick={handleButtonClick} > {isOver ? "Confirm" : "Rotate"} </button>
+                <button className={'start-button'} onClick={handleRandomClick}> Random </button>
             </div>
 
             <div className="board-container">

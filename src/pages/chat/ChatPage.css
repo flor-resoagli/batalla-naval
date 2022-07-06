@@ -8,11 +8,12 @@
 }
 
 .chat-box {
-    background-color: #e8f1f1;
-    border-radius: 20px;
+    background-color: rgba(110, 200, 248, 0.73);
+    border-radius: 30px;
+    border: rgba(193, 81, 253, 0.71) 7px solid;
     width: 80vw;
     max-width: 800px;
-    height: 25vh;
+    height: 30vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,11 +40,11 @@
 }
 
 .message {
-    background-color: rgba(210, 150, 61, 0.7);
-    color: #734d1d;
-    border-radius: 10px;
+    background-color: rgba(245, 121, 250, 0.95);
+    color: #5e1d73;
+    border-radius: 30px;
     height: fit-content;
-    padding: 10px;
+    padding: 10px 0 10px 30px;
     max-width: 90%;
     margin-bottom: 5px;
     overflow-x: hidden;
@@ -59,29 +60,28 @@
 }
 
 .message.self {
-    background-color: rgba(143, 167, 189, 0.81);
-    color: rgba(54, 111, 152, 0.79);
-    border-radius: 10px;
+    background-color: rgba(119, 113, 238, 0.98);
+    color: rgba(56, 35, 117, 0.79);
     height: fit-content;
-    padding: 10px;
-    width: 90%;
     margin-bottom: 5px;
     overflow-x: hidden;
 }
 
 .avatar {
-    background-color: #c58a46;
+    background-color: rgba(221, 168, 245, 0);
+    font-weight: bold;
     width: fit-content;
     height: fit-content;
-    padding: 5px;
-    border-radius: 5px;
+    /*padding: 5px;*/
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 .avatar.self {
-    background-color: #6698c2;
+    /*background-color: #6698c2;*/
     width: fit-content;
     height: fit-content;
-    padding: 5px;
+    /*padding: 5px;*/
     border-radius: 5px;
 }
 
@@ -98,8 +98,10 @@
 .input-message {
     width: 70%;
     height: fit-content;
-    border-radius: 5px;
-    border: none;
+    min-height: 30px;
+    border-width: 5px;
+    border-radius: 15px;
+    border-color: #cf4df3;
     padding: 10px;
     font-size: 17px;
     font-family: "Helvetica", sans-serif;
