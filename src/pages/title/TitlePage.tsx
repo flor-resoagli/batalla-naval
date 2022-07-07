@@ -18,7 +18,7 @@ function TitlePage() {
     const handleLogIn = async (token: string) => {
 
         return userAPI.postUserToken(token).then((r) => {
-            // console.log(r)
+            console.log(r)
             sessionStorage.setItem("player", JSON.stringify(r))
         })
     }

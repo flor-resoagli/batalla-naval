@@ -41,7 +41,8 @@ function App() {
         const bg: HTMLMediaElement | null = document.querySelector('.audio')
 
         if(bg) {
-            bg.muted = !bg.muted
+            bg.paused ? bg.play() : bg.pause()
+            // bg.muted = !bg.muted
         }
     }
 
@@ -90,7 +91,7 @@ function App() {
 
                   </Routes>
 
-                    <button className={'mute-button'} onClick={handleMute}> Sound </button>
+                    <button className={'mute-button'} onClick={handleMute}> Music </button>
                     <audio autoPlay className={'audio'}>
                         <source src={"https://www.fesliyanstudios.com/musicfiles/2019-12-09_-_Retro_Forest_-_David_Fesliyan/2019-12-09_-_Retro_Forest_-_David_Fesliyan.mp3"} type={"audio/mpeg"}/>
                     </audio>

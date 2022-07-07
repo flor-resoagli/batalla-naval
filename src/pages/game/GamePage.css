@@ -44,6 +44,7 @@
 
 .row-page {
     width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -68,4 +69,42 @@
     background-size: cover;
     background-image: url("../../utils/images/win.gif");
     margin-bottom: 40px;
+}
+
+.game-column {
+    display: flex;
+    height: 80vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.users-container {
+    height: 10vh;
+    /*margin-top: 30px;*/
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.user-container {
+    display: flex;
+    flex-direction: row;
+    width: 100px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-pic {
+    border-radius: 50px;
+    border: 5px solid #b525ee;
+    width: 70px;
+    height: 70px;
+    margin-right: 20px;
+}
+
+.profile-pic.self {
+    border: 5px solid #531ddc;
 }

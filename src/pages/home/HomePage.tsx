@@ -3,17 +3,19 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {userAPI} from "../../apis/userAPI";
 
+export type User = {
+    email: string,
+    gamesPlayed: number,
+    gamesWon: number,
+    id: string,
+    name: string,
+    profilePicture: string
+}
+
 function HomePage() {
     const navigate = useNavigate()
 
-    const [player, setPlayer] = useState<{
-        email: string,
-        gamesPlayed: number,
-        gamesWon: number,
-        id: string,
-        name: string,
-        profilePicture: string
-    }>()
+    const [player, setPlayer] = useState<User>()
 
     useEffect(() => {
         const session = sessionStorage.getItem("player")

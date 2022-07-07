@@ -188,7 +188,12 @@ const Game = (props: GameProps) => {
 
     return (
         <div className={'game-container'}>
-            <h1> Battleships </h1>
+            <h1 className={'game-title'}> Battleships </h1>
+            {props.ownTurn ? (
+                <h3 className={'turn'}>It's your turn!</h3>
+            ):(
+                <h3 className={'turn'}>Waiting for opponent...</h3>
+            )}
             <div className={'board-container'}>
 
                 <div className={'user-board'}>
@@ -228,11 +233,7 @@ const Game = (props: GameProps) => {
 
 
             </div>
-                {props.ownTurn ? (
-                    <h3 className={'turn'}>It's your turn!</h3>
-                ):(
-                    <h3 className={'turn'}>Waiting for opponent...</h3>
-                )}
+
 
 
             <Snackbar

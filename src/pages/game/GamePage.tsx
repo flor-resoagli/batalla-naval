@@ -9,9 +9,10 @@ import Positioning from "../../components/positioning/Positioning";
 import Standby from "../../components/standby/Standby";
 import Game from "../../components/game/Game";
 import Loading from "../../components/loading/Loading";
-import game from "../../components/game/Game";
 import Chat from "../../components/chat/Chat";
-import {ArrowBack, ArrowCircleLeft} from "@mui/icons-material";
+import {ArrowCircleLeft} from "@mui/icons-material";
+import {gameAPI} from "../../apis/gameAPI";
+import {User} from "../home/HomePage";
 
 let stompClient: {
     connect: (arg0: {}, arg1: () => void, arg2: (err: any) => void) => void;
@@ -30,6 +31,7 @@ export type Shot = {
     hit: boolean
 }
 
+
 function GamePage () {
 
     const navigate = useNavigate()
@@ -41,15 +43,31 @@ function GamePage () {
 
     const [onLoad, setOnLoad] = useState(true)
     const [connected, setConnected] = useState(false)
+    const [loadOpponent, setLoadOpponent] = useState(true)
+
+
+    const [opponent, setOpponent] = useState<User>()
+    const [user, setUser] = useState<User>()
 
     useEffect(() => {
         // console.log(gameID)
         if(onLoad){
             setOnLoad(false)
             connect()
-
+            const u = sessionStorage.getItem("player")
+            if(u) {
+                setUser(JSON.parse(u))
+            }
         }
-    }, [])
+
+        if(gameID && gameState !== "WAITING" && gameState !== "LOADING" && loadOpponent) {
+            gameAPI.getOpponent(gameID, userID).then(r => {
+                console.log(r)
+                setOpponent(r)
+            })
+            setLoadOpponent(false)
+        }
+    }, [gameState])
 
     function onError() {
         console.log("error")
@@ -329,8 +347,20 @@ function GamePage () {
                     <div className={'other-background'}>
                         <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                         <div className={'row-page'}>
-                            <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
-                            <Chat messages={messages} userId={userID} sendMessage={handleSendMessage}/>
+                            <div className={'game-column'}>
+                                <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
+                                <div className={'users-container'}>
+                                    <div className={'user-container'}>
+                                        <img src={user?.profilePicture}  alt={"profilepic"} className={'profile-pic self'}/>
+                                        <p> {user?.name} </p>
+                                    </div>
+                                    <div className={'user-container'}>
+                                        <img src={opponent?.profilePicture}  alt={"profilepic"} className={'profile-pic'}/>
+                                        <p> {opponent?.name} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <Chat messages={messages} userId={userID} userName={user?.name} opponentName={opponent?.name} sendMessage={handleSendMessage}/>
                         </div>
                         <audio className={'miss-audio'}>
                             <source src={"https://cdn.pixabay.com/download/audio/2021/08/09/audio_0dcf482f2f.mp3?filename=jump-into-water-splash-sound-6999.mp3"}/>
