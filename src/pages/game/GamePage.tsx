@@ -390,19 +390,20 @@ function GamePage () {
                             <div>
                                 {/*<h3> nice. </h3>*/}
                                 <div className={'winner-image'}> </div>
+                                <audio className={'win-sound'} autoPlay>
+                                    <source src={"https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=success-fanfare-trumpets-6185.mp3"}/>
+                                </audio>
                             </div>
                         ):(
                             <div>
                                 <div className={'loser-image'}> </div>
+                                <audio className={'lose-sound'} autoPlay>
+                                    <source src={"https://cdn.pixabay.com/download/audio/2021/08/04/audio_c003cb2711.mp3?filename=wah-wah-sad-trombone-6347.mp3"}/>
+                                </audio>
                             </div>
                         )}
                         <button onClick={handleBackToHome}> Play again </button>
-                        <audio className={'win-sound'} autoPlay>
-                            <source src={"https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=success-fanfare-trumpets-6185.mp3"}/>
-                        </audio>
-                        <audio className={'lose-sound'} autoPlay>
-                            <source src={"https://cdn.pixabay.com/download/audio/2021/08/04/audio_c003cb2711.mp3?filename=wah-wah-sad-trombone-6347.mp3"}/>
-                        </audio>
+
                     </div>
                 </div>
             )
