@@ -17,6 +17,7 @@ let stompClient: {
     connect: (arg0: {}, arg1: () => void, arg2: (err: any) => void) => void;
     subscribe: (arg0: string, arg1: { (payload: any): void; (payload: any): void; }) => void;
     send: (arg0: string, arg1: {}, arg2: string) => void;
+    disconnect: (disconnectCallback: () => any, headers?: {}) => any;
 } | null = null;
 
 interface GamePageProps {
@@ -140,6 +141,10 @@ function GamePage () {
         const payloadData = JSON.parse(payload.body);
         setGameState(payloadData.status)
         switch (payloadData.status) {
+
+            case "GAME_FULL":
+                stompClient?.disconnect(() => {console.log("disconnected")})
+                break
 
             case "YOUR_TURN":
                 if(payloadData.positionsPlayer1){
