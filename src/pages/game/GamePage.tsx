@@ -284,6 +284,7 @@ function GamePage () {
             stompClient.send("/app/endGame", {}, JSON.stringify(exitMessage))
         }
 
+        stompClient?.disconnect(() => {console.log("disconnected")})
         navigate("/home")
     }
 
