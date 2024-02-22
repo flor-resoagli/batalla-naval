@@ -1,5 +1,5 @@
 
-const apiURL = " https://batallanaval-hmk1.onrender.com/player"
+const apiURL = "https://batallanaval-hmk1.onrender.com/player"
 
 class UserAPI {
 
