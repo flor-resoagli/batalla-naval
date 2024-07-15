@@ -1,5 +1,5 @@
 import './Game.css'
-import React, {createElement, MouseEventHandler, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import {Snackbar} from "@mui/material";
 import Loading from "../loading/Loading";
 
@@ -67,15 +67,15 @@ const Game = (props: GameProps) => {
         const grid = document.querySelector('.user-board')
         let i = 0
 
-            while (userSquares.length < 100) {
+        while (userSquares.length < 100) {
 
-                const square = document.createElement('div')
-                square.dataset.id = String(i)
-                grid?.appendChild(square)
-                userSquares.push(square)
-                i++
+            const square = document.createElement('div')
+            square.dataset.id = String(i)
+            grid?.appendChild(square)
+            userSquares.push(square)
+            i++
 
-            }
+        }
     }
 
     function renderOpponentBoard() {
@@ -168,6 +168,21 @@ const Game = (props: GameProps) => {
         }
     }
 
+    const nums = [0,1,2,3,4,5,6,7,8,9]
+
+    const handleAutoPlay = () => {
+        // @ts-ignore
+        console.log("Autoshoot!");
+        if(props.ownTurn) {
+            const randomX = nums[Math.floor(Math.random() * nums.length)];
+            const randomY = nums[Math.floor(Math.random() * nums.length)];
+            const randomIndex = randomX * nums.length + randomY;
+            props.onShoot(String(randomIndex))
+        }else{
+            handleShowError()
+        }
+    }
+
     const [openError, setOpenError] = useState(false)
     function handleShowError() {
         // console.log(props.ownTurn)
@@ -183,17 +198,10 @@ const Game = (props: GameProps) => {
 
     }
 
-    const nums = [0,1,2,3,4,5,6,7,8,9]
-
 
     return (
         <div className={'game-container'}>
-            <h1 className={'game-title'}> Battleships </h1>
-            {props.ownTurn ? (
-                <h3 className={'turn'}>It's your turn!</h3>
-            ):(
-                <h3 className={'turn'}>Waiting for opponent...</h3>
-            )}
+            <h1> Battleships </h1>
             <div className={'board-container'}>
 
                 <div className={'user-board'}>
@@ -233,7 +241,14 @@ const Game = (props: GameProps) => {
 
 
             </div>
-
+            {props.ownTurn ? (
+                <>
+                    <h3 className={'turn'}>It's your turn!</h3>
+                    <button onClick={handleAutoPlay} >Auto Play</button>
+                </>
+            ):(
+                <h3 className={'turn'}>Waiting for opponent...</h3>
+            )}
 
 
             <Snackbar

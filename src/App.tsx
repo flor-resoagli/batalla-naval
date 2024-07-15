@@ -7,7 +7,7 @@ import HomePage from "./pages/home/HomePage";
 import GamePage from "./pages/game/GamePage";
 import NewGamePage from "./pages/newGame/newGamePage";
 import WaitingRoomPage from "./pages/waitingRoom/WaitingRoomPage";
-import {VolumeMute, VolumeOff} from "@mui/icons-material";
+import NotFound from "./components/NotFound";
 
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
         const bg: HTMLMediaElement | null = document.querySelector('.audio')
 
         if(bg) {
-            bg.play()
+            // bg.play()
             bg.addEventListener('timeupdate', function (){
                 if (bg.currentTime >= 2*60+30) {
                     bg.currentTime = 0;
@@ -37,23 +37,14 @@ function App() {
         }
     }, [])
 
-    const handleMute = () => {
-        const bg: HTMLMediaElement | null = document.querySelector('.audio')
-
-        if(bg) {
-            bg.paused ? bg.play() : bg.pause()
-            // bg.muted = !bg.muted
-        }
-    }
-
     return (
-      <div className={'background'}>
-          {/*<audio src={bgMusic} autoPlay />*/}
-          {/*<img src={Background} className={'background-image'} alt={'battleship'}/>*/}
+        <div className={'background'}>
+            {/*<audio src={bgMusic} autoPlay />*/}
+            {/*<img src={Background} className={'background-image'} alt={'battleship'}/>*/}
             <Router>
                 <div className={'pages'}>
 
-                  <Routes>
+                    <Routes>
 
                         <Route path={"/"} element={<TitlePage />}/>
 
@@ -71,35 +62,39 @@ function App() {
                             </ProtectedRoute>
                         }/>
 
-                      <Route path={'/newGame'} element={
-                          <ProtectedRoute >
-                              <NewGamePage/>
-                          </ProtectedRoute>
-                      }/>
+                        <Route path={'/newGame'} element={
+                            <ProtectedRoute >
+                                <NewGamePage/>
+                            </ProtectedRoute>
+                        }/>
 
-                      <Route path={'/game/:gameID'} element={
-                          <ProtectedRoute>
-                              <GamePage />
-                          </ProtectedRoute>
-                      }/>
+                        <Route path={'/game/:gameID'} element={
+                            <ProtectedRoute>
+                                <GamePage />
+                            </ProtectedRoute>
+                        }/>
 
-                      <Route path={'/waiting'} element={
-                          <ProtectedRoute>
-                              <WaitingRoomPage />
-                          </ProtectedRoute>
-                      }/>
+                        <Route path={'/waiting'} element={
+                            <ProtectedRoute>
+                                <WaitingRoomPage />
+                            </ProtectedRoute>
+                        }/>
 
-                  </Routes>
+                        <Route path={'*'} element={
+                            <ProtectedRoute>
+                                <NotFound />
+                            </ProtectedRoute>
+                        }/>
 
-                    <button className={'mute-button'} onClick={handleMute}> Music </button>
-                    <audio autoPlay className={'audio'}>
+                    </Routes>
+                    <audio controls autoPlay className={'audio'}>
                         <source src={"https://www.fesliyanstudios.com/musicfiles/2019-12-09_-_Retro_Forest_-_David_Fesliyan/2019-12-09_-_Retro_Forest_-_David_Fesliyan.mp3"} type={"audio/mpeg"}/>
                     </audio>
                 </div>
             </Router>
 
-      </div>
-  );
+        </div>
+    );
 }
 
 

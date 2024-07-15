@@ -1,6 +1,6 @@
 import {RandomUUIDOptions} from "crypto";
 
-const apiURL = " https://battleshiips.herokuapp.com/gameroom"
+const apiURL = " https://batallanaval-hmk1.onrender.com/gameroom"
 
 class GameAPI {
 
