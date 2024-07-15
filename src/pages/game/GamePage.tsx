@@ -43,12 +43,27 @@ function GamePage () {
 
     useEffect(() => {
         // console.log(gameID)
+        function handleOnBeforeUnload(event: BeforeUnloadEvent){
+            event.preventDefault();
+            return (event.returnValue='')
+        }
+        window.addEventListener('beforeunload', handleOnBeforeUnload, {capture: true});
+
+        const gameState = window.localStorage.getItem('LAST_GAME_STATE')
+        if(gameState != null)  setGameState(JSON.parse(gameState));
         if(onLoad){
             setOnLoad(false)
             connect()
 
         }
+        return () => {
+            window.removeEventListener('beforeunload', handleOnBeforeUnload, {capture: true});
+        }
     }, [])
+
+    useEffect(() => {
+        window.localStorage.setItem('LAST_GAME_STATE', JSON.stringify(gameState));
+    }, [gameState])
 
     function onError() {
         console.log("error")
