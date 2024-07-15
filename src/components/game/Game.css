@@ -16,13 +16,18 @@
 .game-container {
     width: 60vw;
     min-width: fit-content;
-    height: 100vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-left: 20px;
     /*margin-top: 20px;*/
+}
+
+.game-title {
+    font-size: 50px;
+    margin: 0;
 }
 
 .opponent-board {
@@ -83,7 +88,7 @@
 }
 
 .miss::after {
-    background-color: #efcdf8;
+    background-color: #5fdee0;
 }
 
 .boom::after {
@@ -98,6 +103,10 @@
     border-radius: 100%;
     width: 2vmin;
     height: 2vmin;
+}
+
+.miss {
+    animation: miss .2s ease-out forwards;
 }
 
 .boom {
@@ -123,6 +132,16 @@
 
     100% {
         background-color: hsl(353, 100%, 84%);
+    }
+}
+
+@keyframes miss {
+    0% {
+        background-color: #00eaff;
+    }
+
+    100% {
+        background-color: hsla(178, 100%, 84%, 0.36);
     }
 }
 

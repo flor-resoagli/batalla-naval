@@ -8,14 +8,17 @@ function TitlePage() {
 
     function handleCallbackResponse(response: any) {
         //validate token and get user information
-        handleLogIn(response.credential).then(r => console.log(r))
-        navigate("/home")
+        handleLogIn(response.credential).then(r => {
+            // console.log(r)
+            navigate("/home")
+        })
+        // navigate("/home")
     }
 
     const handleLogIn = async (token: string) => {
 
         return userAPI.postUserToken(token).then((r) => {
-            // console.log(r)
+            console.log(r)
             sessionStorage.setItem("player", JSON.stringify(r))
         })
     }

@@ -1,11 +1,13 @@
 import './Chat.css'
-import React, {ChangeEvent, ChangeEventHandler, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 
 
 interface ChatProps {
     messages: {message: string, user: string}[]
     userId: string
     sendMessage: (message: string) => void
+    userName: string | undefined,
+    opponentName: string | undefined
 }
 
 
@@ -33,8 +35,8 @@ const Chat = (props: ChatProps) => {
                         {props.messages.map(chat=>(
                             <div className={`message-container ${chat.user === props.userId && "self"}`}>
                                 <li className={`message ${chat.user === props.userId && "self"}`}  >
-                                    {chat.user !== props.userId && <div className="avatar">Opponent</div>}
-                                    {chat.user === props.userId && <div className="avatar self">Me</div>}
+                                    {chat.user !== props.userId && <div className="avatar">{props.opponentName ? props.opponentName : "Opponent"}</div>}
+                                    {chat.user === props.userId && <div className="avatar self">{props.userName ? props.userName : "Me"}</div>}
                                     <div className="message-data">{chat.message}</div>
                                 </li>
                             </div>
