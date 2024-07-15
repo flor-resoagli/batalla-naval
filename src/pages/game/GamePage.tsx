@@ -9,16 +9,14 @@ import Positioning from "../../components/positioning/Positioning";
 import Standby from "../../components/standby/Standby";
 import Game from "../../components/game/Game";
 import Loading from "../../components/loading/Loading";
+import game from "../../components/game/Game";
 import Chat from "../../components/chat/Chat";
-import {ArrowCircleLeft} from "@mui/icons-material";
-import {gameAPI} from "../../apis/gameAPI";
-import {User} from "../home/HomePage";
+import {ArrowBack, ArrowCircleLeft} from "@mui/icons-material";
 
 let stompClient: {
     connect: (arg0: {}, arg1: () => void, arg2: (err: any) => void) => void;
     subscribe: (arg0: string, arg1: { (payload: any): void; (payload: any): void; }) => void;
     send: (arg0: string, arg1: {}, arg2: string) => void;
-    disconnect: (disconnectCallback: () => any, headers?: {}) => any;
 } | null = null;
 
 interface GamePageProps {
@@ -31,7 +29,6 @@ export type Shot = {
     hit: boolean
 }
 
-
 function GamePage () {
 
     const navigate = useNavigate()
@@ -43,30 +40,29 @@ function GamePage () {
 
     const [onLoad, setOnLoad] = useState(true)
     const [connected, setConnected] = useState(false)
-    const [loadOpponent, setLoadOpponent] = useState(true)
-
-
-    const [opponent, setOpponent] = useState<User>()
-    const [user, setUser] = useState<User>()
 
     useEffect(() => {
         // console.log(gameID)
+        function handleOnBeforeUnload(event: BeforeUnloadEvent){
+            event.preventDefault();
+            return (event.returnValue='')
+        }
+        window.addEventListener('beforeunload', handleOnBeforeUnload, {capture: true});
+
+        const gameState = window.localStorage.getItem('LAST_GAME_STATE')
+        if(gameState != null)  setGameState(JSON.parse(gameState));
         if(onLoad){
             setOnLoad(false)
             connect()
-            const u = sessionStorage.getItem("player")
-            if(u) {
-                setUser(JSON.parse(u))
-            }
-        }
 
-        if(gameID && gameState !== "WAITING" && gameState !== "LOADING" && loadOpponent) {
-            gameAPI.getOpponent(gameID, userID).then(r => {
-                console.log(r)
-                setOpponent(r)
-            })
-            setLoadOpponent(false)
         }
+        return () => {
+            window.removeEventListener('beforeunload', handleOnBeforeUnload, {capture: true});
+        }
+    }, [])
+
+    useEffect(() => {
+        window.localStorage.setItem('LAST_GAME_STATE', JSON.stringify(gameState));
     }, [gameState])
 
     function onError() {
@@ -74,7 +70,7 @@ function GamePage () {
     }
 
     const connect = () =>{
-        let Sock = new SockJS(' https://battleshiips.herokuapp.com/battleship');
+        let Sock = new SockJS(' http://localhost:8080/battleship');
         stompClient = over(Sock);
         if(stompClient){
             stompClient.connect({},onConnected, onError);
@@ -159,10 +155,6 @@ function GamePage () {
         const payloadData = JSON.parse(payload.body);
         setGameState(payloadData.status)
         switch (payloadData.status) {
-
-            case "GAME_FULL":
-                stompClient?.disconnect(() => {console.log("disconnected")})
-                break
 
             case "YOUR_TURN":
                 if(payloadData.positionsPlayer1){
@@ -302,7 +294,6 @@ function GamePage () {
             stompClient.send("/app/endGame", {}, JSON.stringify(exitMessage))
         }
 
-        stompClient?.disconnect(() => {console.log("disconnected")})
         navigate("/home")
     }
 
@@ -347,20 +338,8 @@ function GamePage () {
                     <div className={'other-background'}>
                         <div className={'back-btn'} onClick={handleExit}> <ArrowCircleLeft  fontSize={'inherit'}/> Exit </div>
                         <div className={'row-page'}>
-                            <div className={'game-column'}>
-                                <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
-                                <div className={'users-container'}>
-                                    <div className={'user-container'}>
-                                        <img src={user?.profilePicture}  alt={"profilepic"} className={'profile-pic self'}/>
-                                        <p> {user?.name} </p>
-                                    </div>
-                                    <div className={'user-container'}>
-                                        <img src={opponent?.profilePicture}  alt={"profilepic"} className={'profile-pic'}/>
-                                        <p> {opponent?.name} </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <Chat messages={messages} userId={userID} userName={user?.name} opponentName={opponent?.name} sendMessage={handleSendMessage}/>
+                            <Game positions={positions} ownTurn={ownTurn} shotsOwn={ownShots} shotsOpponent={opponentShots} onShoot={onShoot}/>
+                            <Chat messages={messages} userId={userID} sendMessage={handleSendMessage}/>
                         </div>
                         <audio className={'miss-audio'}>
                             <source src={"https://cdn.pixabay.com/download/audio/2021/08/09/audio_0dcf482f2f.mp3?filename=jump-into-water-splash-sound-6999.mp3"}/>
@@ -390,20 +369,13 @@ function GamePage () {
                             <div>
                                 {/*<h3> nice. </h3>*/}
                                 <div className={'winner-image'}> </div>
-                                <audio className={'win-sound'} autoPlay>
-                                    <source src={"https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=success-fanfare-trumpets-6185.mp3"}/>
-                                </audio>
                             </div>
                         ):(
                             <div>
                                 <div className={'loser-image'}> </div>
-                                <audio className={'lose-sound'} autoPlay>
-                                    <source src={"https://cdn.pixabay.com/download/audio/2021/08/04/audio_c003cb2711.mp3?filename=wah-wah-sad-trombone-6347.mp3"}/>
-                                </audio>
                             </div>
                         )}
                         <button onClick={handleBackToHome}> Play again </button>
-
                     </div>
                 </div>
             )

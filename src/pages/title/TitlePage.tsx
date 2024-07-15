@@ -31,7 +31,7 @@ function TitlePage() {
 
         // @ts-ignore
         google.accounts.id.initialize({
-            client_id: "471985862015-nm599odp85d7b8lfkhf1nss4m1m1vjtc.apps.googleusercontent.com",
+            client_id: "1002439529785-176seou2o0icad73ijfohbeq4lgfeo4j.apps.googleusercontent.com",
             callback: handleCallbackResponse
         })
 
